@@ -18,3 +18,24 @@ generador-contrasenas/
 ● Crear README con descripción del proyecto y objetivos
 ● Crear requirements.txt (solo biblioteca estándar: string, secrets, os)
 
+Prompt 2
+
+● Importar los módulos string y secrets
+● Crear función que genere una contraseña de 12 caracteres con todos los tipos
+● Incluir letras minúsculas, mayúsculas, números y símbolos
+● Mostrar la contraseña generada por pantalla
+
+Prompt 3
+
+● Modificar la función para aceptar la longitud como parámetro
+● Preguntar al usuario la longitud deseada
+● Establecer un valor por defecto de 16 caracteres
+● Validar que la longitud sea un entero entre 8 y 128
+
+Prompt 4
+
+● Añadir parámetros opcionales: usar_mayusculas, usar_numeros, usar_simbolos
+● Preguntar al usuario si quiere incluir cada tipo de carácter (s/n)
+● Construir el conjunto de caracteres dinámicamente según las opciones
+● Garantizar que al menos un tipo de carácter esté siempre activado
+

@@ -1,6 +1,6 @@
-import sys
-import re
 from collections import Counter
+from datetime import datetime
+import re
 import os
 
 def capturar_texto_terminal():
@@ -202,6 +202,55 @@ def mostrar_informe_avanzado(texto):
     
     print("╚" + "═"*45 + "╝\n")
 
+def guardar_informe(texto, fuente, stats, top_5, oraciones, parrafos):
+    """
+    Genera un archivo .txt con el informe completo y lo guarda en docs/.
+    """
+    confirmacion = input("¿Deseas guardar el informe en un archivo? (s/n): ").lower()
+    
+    if confirmacion != 's':
+        print("Informe no guardado.")
+        return
+
+    # Crear el nombre del archivo con la fecha actual para evitar sobreescrituras
+    ahora = datetime.now()
+    fecha_str = ahora.strftime("%Y-%m-%d_%H-%M-%S")
+    ruta_destino = f"docs/informe_{fecha_str}.txt"
+
+    try:
+        with open(ruta_destino, 'w', encoding='utf-8') as f:
+            f.write("==========================================\n")
+            f.write("      INFORME DE ANÁLISIS DE TEXTO        \n")
+            f.write("==========================================\n\n")
+            
+            f.write(f"📅 Fecha y hora: {ahora.strftime('%d/%m/%Y %H:%M:%S')}\n")
+            f.write(f"📂 Fuente: {fuente}\n")
+            f.write("-" * 42 + "\n\n")
+            
+            # Estadísticas Básicas
+            f.write(f"📝 Palabras totales: {len(texto.split())}\n")
+            f.write(f"📜 Oraciones:        {oraciones}\n")
+            f.write(f"📂 Párrafos:         {parrafos}\n")
+            f.write(f"🔍 Palabras únicas:  {stats['unicas']}\n")
+            f.write(f"📈 Riqueza léxica:   {stats['porcentaje']:.2f}%\n")
+            f.write(f"📏 Longitud media:   {stats['media']:.2f} caracteres\n\n")
+            
+            # Palabras extremas
+            f.write(f"🚀 Palabra más larga: {stats['larga']}\n")
+            f.write(f"📍 Palabra más corta: {stats['corta']}\n\n")
+            
+            # Top 5
+            f.write("🔝 TOP 5 PALABRAS MÁS FRECUENTES:\n")
+            for i, (palabra, frec) in enumerate(top_5, 1):
+                f.write(f"   {i}. '{palabra}': {frec} apariciones\n")
+            
+            f.write("\n" + "="*42 + "\n")
+            f.write("Generado por: Contador-Palabras Pro\n")
+
+        print(f"\n✅ Informe guardado con éxito en: {ruta_destino}")
+        
+    except Exception as e:
+        print(f"❌ No se pudo guardar el archivo: {e}")
 
 def menu_principal():
     print("--- 📊 CONTADOR DE PALABRAS PRO ---")
@@ -213,9 +262,11 @@ def menu_principal():
     
     if opcion == "1":
         texto = capturar_texto_terminal() # La función que creamos antes
+        fuente = "Entrada Manual" # O la ruta del archivo
     elif opcion == "2":
         ruta = input("Introduce la ruta del archivo (ej: textos/ejemplo.txt): ")
         texto = cargar_archivo(ruta)
+        fuente = ruta # O la ruta del archivo
     else:
         print("Opción no válida.")
         return
@@ -224,6 +275,12 @@ def menu_principal():
         # Aplicamos TODAS las funciones de análisis creadas
         mostrar_informe(texto)
         mostrar_informe_avanzado(texto)
+        # 2. Procesamiento de datos
+        stats = calcular_estadisticas_lexicas(texto)
+        top_5 = obtener_palabras_frecuentes(texto)
+        oraciones = contar_oraciones(texto)
+        parrafos = contar_parrafos(texto)
+        guardar_informe(texto, fuente, stats, top_5, oraciones, parrafos)
 
 if __name__ == "__main__":
     menu_principal()

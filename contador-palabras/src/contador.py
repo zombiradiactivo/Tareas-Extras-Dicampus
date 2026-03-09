@@ -1,5 +1,6 @@
 from collections import Counter
 from datetime import datetime
+import sys
 import re
 import os
 
@@ -252,35 +253,69 @@ def guardar_informe(texto, fuente, stats, top_5, oraciones, parrafos):
     except Exception as e:
         print(f"❌ No se pudo guardar el archivo: {e}")
 
-def menu_principal():
-    print("--- 📊 CONTADOR DE PALABRAS PRO ---")
-    print("1. Introducir texto manualmente")
-    print("2. Cargar desde archivo .txt")
-    opcion = input("Selecciona una opción: ")
+def limpiar_pantalla():
+    """Limpia la terminal dependiendo del sistema operativo."""
+    # 'nt' es para Windows, 'posix' para Linux/Mac
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-    texto = ""
+def mostrar_bienvenida():
+    """Muestra un banner decorativo al inicio."""
+    print("="*50)
+    print("      📝 BIENVENIDO A TEXT-ANALYZER       ")
+    print("="*50)
+    print("  Tu herramienta de métricas y análisis léxico")
+    print("="*50 + "\n")
+
+def procesar_y_mostrar(texto, fuente):
+    """Orquestador que llama a las funciones de análisis y muestra resultados."""
+    limpiar_pantalla()
     
-    if opcion == "1":
-        texto = capturar_texto_terminal() # La función que creamos antes
-        fuente = "Entrada Manual" # O la ruta del archivo
-    elif opcion == "2":
-        ruta = input("Introduce la ruta del archivo (ej: textos/ejemplo.txt): ")
-        texto = cargar_archivo(ruta)
-        fuente = ruta # O la ruta del archivo
-    else:
-        print("Opción no válida.")
-        return
+    # Realizar cálculos
+    stats = calcular_estadisticas_lexicas(texto)
+    top_5 = obtener_palabras_frecuentes(texto)
+    oraciones = contar_oraciones(texto)
+    parrafos = contar_parrafos(texto)
+    
+    # Mostrar resultados en pantalla
+    mostrar_informe(texto)
+    mostrar_informe_avanzado(texto)
 
-    if texto:
-        # Aplicamos TODAS las funciones de análisis creadas
-        mostrar_informe(texto)
-        mostrar_informe_avanzado(texto)
-        # 2. Procesamiento de datos
-        stats = calcular_estadisticas_lexicas(texto)
-        top_5 = obtener_palabras_frecuentes(texto)
-        oraciones = contar_oraciones(texto)
-        parrafos = contar_parrafos(texto)
-        guardar_informe(texto, fuente, stats, top_5, oraciones, parrafos)
+    # Ofrecer guardar
+    guardar_informe(texto, fuente, stats, top_5, oraciones, parrafos)
+    
+    input("\nPresiona ENTER para volver al menú principal...")
+
+def menu_principal():
+    while True:
+        limpiar_pantalla()
+        mostrar_bienvenida()
+        
+        print("1. ⌨️  Analizar texto manual")
+        print("2. 📁  Analizar archivo (.txt)")
+        print("3. ❌  Salir")
+        print("-" * 50)
+        
+        opcion = input("\nSelecciona una opción (1-3): ")
+
+        if opcion == "1":
+            texto = capturar_texto_terminal() # Función de entrada manual
+            fuente = "Entrada manual"
+            if texto:
+                procesar_y_mostrar(texto, fuente)
+        
+        elif opcion == "2":
+            ruta = input("\nIntroduce la ruta del archivo (ej: textos/ejemplo.txt): ")
+            texto = cargar_archivo(ruta) # Función de lectura de archivo
+            fuente = f"Archivo: {ruta}"
+            if texto:
+                procesar_y_mostrar(texto, fuente)
+        
+        elif opcion == "3":
+            print("\n¡Gracias por usar Text-Analyzer! Hasta pronto.\n")
+            sys.exit() # Sale del programa limpiamente
+        
+        else:
+            input("\n Opción no válida. Presiona ENTER para continuar...")
 
 if __name__ == "__main__":
     menu_principal()

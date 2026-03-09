@@ -1,3 +1,25 @@
+🤖 Registro de Asistencia de IA
+
+Proyecto: Contador de Palabras
+Objetivo: Crear una herramienta CLI para análisis de texto.
+
+Prompts utilizados:
+
+    Generación de estructura de archivos y README.
+
+    Implementación de captura multilínea con delimitadores.
+
+    Lógica de conteo con Regex (re) para oraciones y párrafos.
+
+    Análisis de frecuencia con collections.Counter y filtrado de stop-words.
+
+    Cálculo de métricas avanzadas (riqueza léxica, longitud media).
+
+    Gestión de errores en lectura/escritura de archivos.
+
+    Interfaz de usuario dinámica (limpieza de pantalla y bucle de menú).
+
+
 Prompt 1
 
 Genera el readme.md de el siguiente proyecto 
@@ -50,3 +72,11 @@ Prompt 5
 ● Crear función que cargue y lea un archivo .txt dado su ruta
 ● Aplicar todas las funciones de análisis ya creadas al texto del archivo
 ● Manejar errores: archivo no encontrado, archivo vacío, ruta incorrecta
+
+Prompt 6
+
+● Preguntar al usuario si quiere guardar el informe de análisis
+● Crear función que escriba todos los resultados en un archivo informe.txt
+● Incluir en el informe: fecha, hora, fuente del texto y todas las estadísticas
+● Confirmar al usuario la ruta donde se ha guardado el archivo
+

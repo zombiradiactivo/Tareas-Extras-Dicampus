@@ -38,3 +38,14 @@ def capturar_texto_terminal():
     
 if __name__ == "__main__":
     texto = capturar_texto_terminal()
+    
+    if texto:
+
+        # Aquí llamarías a tus funciones de conteo
+        print(f"Procesando {len(texto.split())} palabras...")
+
+        texto_sin_doble_espacios = texto.replace('  ',' ')
+        print(f"Numero de caracteres con espacios {len(texto_sin_doble_espacios)} espacios dobles cuentan como 1")
+
+        texto_sin_espacios = texto_sin_doble_espacios.replace(' ','')
+        print(f"Numero de caracteres sin espacios {len(texto_sin_espacios)}")

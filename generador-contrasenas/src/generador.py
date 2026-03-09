@@ -1,7 +1,7 @@
 import string
 import secrets
 
-def generar_contrasena(longitud, incluir_mayus, incluir_nums, incluir_simb):
+def generar_contrasena(longitud, incluir_mayus, incluir_nums, incluir_simb, excluir_confusos):
     """
     Construye la contraseña basándose en las preferencias del usuario.
     """
@@ -14,6 +14,11 @@ def generar_contrasena(longitud, incluir_mayus, incluir_nums, incluir_simb):
         caracteres += string.digits
     if incluir_simb:
         caracteres += string.punctuation
+
+    if excluir_confusos:
+        confusos = "0OIl1"
+        caracteres = "".join(c for c in caracteres if c not in confusos)
+        print(f"  Caracteres disponibles tras filtrado: {len(caracteres)}")
 
     # Generación segura
     return ''.join(secrets.choice(caracteres) for _ in range(longitud))
@@ -96,6 +101,9 @@ def configurar_generacion():
     nums = obtener_si_no("¿Incluir Números?")
     simbs = obtener_si_no("¿Incluir Símbolos especiales?")
 
+    # Preguntar por exclusión de confusos
+    excluir = obtener_si_no("¿Excluir caracteres confusos? (0, O, l, I, 1)")
+
     # 3. Generar y mostrar
     cantidad = obtener_cantidad()
     
@@ -104,7 +112,7 @@ def configurar_generacion():
     print("-" * 50)
     
     for i in range(1, cantidad + 1):
-        pwd = generar_contrasena(longitud, mayus, nums, simbs)
+        pwd = generar_contrasena(longitud, mayus, nums, simbs, excluir)
         fortaleza = evaluar_fortaleza(pwd)
         # Formateo de columnas para que se vea ordenado
         print(f"{i:<4} | {pwd:<20} | {fortaleza}")

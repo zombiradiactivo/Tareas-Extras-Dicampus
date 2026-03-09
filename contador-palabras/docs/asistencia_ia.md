@@ -43,3 +43,10 @@ Prompt 4
 ● Calcular el porcentaje de palabras únicas sobre el total
 ● Identificar la palabra más larga y la más corta del texto
 ● Mostrar todas las estadísticas en un bloque de resultados bien formateado
+
+Prompt 5
+
+● Crear el archivo textos/ejemplo.txt con un texto de prueba de varias líneas
+● Crear función que cargue y lea un archivo .txt dado su ruta
+● Aplicar todas las funciones de análisis ya creadas al texto del archivo
+● Manejar errores: archivo no encontrado, archivo vacío, ruta incorrecta

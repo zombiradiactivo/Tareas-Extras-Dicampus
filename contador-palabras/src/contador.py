@@ -116,6 +116,38 @@ def calcular_estadisticas_lexicas(texto):
         "corta": palabra_corta
     }
 
+def cargar_archivo(ruta):
+    """
+    Lee el contenido de un archivo .txt con manejo de errores robusto.
+    """
+    # 1. Verificar si el archivo existe
+    if not os.path.exists(ruta):
+        print(f"❌ Error: El archivo en '{ruta}' no existe.")
+        return None
+
+    # 2. Verificar si es un archivo .txt
+    if not ruta.lower().endswith('.txt'):
+        print("❌ Error: El archivo debe tener extensión .txt.")
+        return None
+
+    try:
+        with open(ruta, 'r', encoding='utf-8') as archivo:
+            contenido = archivo.read().strip()
+            
+            # 3. Verificar si el archivo está vacío
+            if not contenido:
+                print(f"⚠️ El archivo '{ruta}' está vacío.")
+                return None
+            
+            return contenido
+
+    except PermissionError:
+        print("❌ Error: No tienes permisos para leer este archivo.")
+    except Exception as e:
+        print(f"❌ Ocurrió un error inesperado: {e}")
+    
+    return None
+
 def mostrar_informe(texto):
     # Cálculos previos
     palabras = len(texto.split())
@@ -171,8 +203,27 @@ def mostrar_informe_avanzado(texto):
     print("╚" + "═"*45 + "╝\n")
 
 
-if __name__ == "__main__":
-    texto = capturar_texto_terminal()
+def menu_principal():
+    print("--- 📊 CONTADOR DE PALABRAS PRO ---")
+    print("1. Introducir texto manualmente")
+    print("2. Cargar desde archivo .txt")
+    opcion = input("Selecciona una opción: ")
+
+    texto = ""
+    
+    if opcion == "1":
+        texto = capturar_texto_terminal() # La función que creamos antes
+    elif opcion == "2":
+        ruta = input("Introduce la ruta del archivo (ej: textos/ejemplo.txt): ")
+        texto = cargar_archivo(ruta)
+    else:
+        print("Opción no válida.")
+        return
+
     if texto:
+        # Aplicamos TODAS las funciones de análisis creadas
         mostrar_informe(texto)
         mostrar_informe_avanzado(texto)
+
+if __name__ == "__main__":
+    menu_principal()

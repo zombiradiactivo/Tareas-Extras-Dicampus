@@ -30,6 +30,19 @@ def obtener_si_no(mensaje):
             return False
         print("❌ Por favor, responde con 's' para sí o 'n' para no.")
 
+def obtener_cantidad():
+    """Valida que el usuario pida entre 1 y 10 contraseñas."""
+    while True:
+        entrada = input("\n¿Cuántas contraseñas quieres generar? (1-10) [Enter para 1]: ").strip()
+        if not entrada: return 1
+        try:
+            cantidad = int(entrada)
+            if 1 <= cantidad <= 10:
+                return cantidad
+            print("❌ Por favor, elige un número entre 1 y 10.")
+        except ValueError:
+            print("❌ Error: Introduce un número entero válido.")
+
 def evaluar_fortaleza(password):
     """
     Evalúa la seguridad de la contraseña basada en criterios específicos.
@@ -84,13 +97,19 @@ def configurar_generacion():
     simbs = obtener_si_no("¿Incluir Símbolos especiales?")
 
     # 3. Generar y mostrar
-    password = generar_contrasena(longitud, mayus, nums, simbs)
-    fortaleza, color = evaluar_fortaleza(password)
+    cantidad = obtener_cantidad()
     
-    print("\n" + "="*40)
-    print(f"🔑 Contraseña: {password}")
-    print(f"📊 Fortaleza:  {fortaleza, color}")
-    print("="*40)
+    print("\n" + "="*50)
+    print(f"{'N°':<4} | {'Contraseña':<20} | {'Fortaleza'}")
+    print("-" * 50)
+    
+    for i in range(1, cantidad + 1):
+        pwd = generar_contrasena(longitud, mayus, nums, simbs)
+        fortaleza = evaluar_fortaleza(pwd)
+        # Formateo de columnas para que se vea ordenado
+        print(f"{i:<4} | {pwd:<20} | {fortaleza}")
+        
+    print("="*50)
 
 
 if __name__ == "__main__":

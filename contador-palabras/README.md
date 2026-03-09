@@ -1,62 +1,58 @@
 # 📝 Contador de Palabras
 
-Este programa permite obtener estadísticas detalladas tanto de entradas directas por consola como de archivos de texto, facilitando el procesamiento de datos textuales.
+Analizador de texto avanzado para terminal que proporciona métricas detalladas sobre la estructura y riqueza léxica de cualquier texto o archivo `.txt`.
 
-## ✨ Características
+## 🚀 Cómo empezar
 
-- Entrada Versátil: Soporta introducción de texto manual o lectura de archivos .txt.
+### Requisitos
+- Python 3.8 o superior.
 
-- Análisis Detallado: Calcula el número total de palabras, caracteres, líneas y frecuencia de términos.
+### Instalación
+1. Clona el repo.
+2. No requiere librerías externas (solo módulos estándar).
 
-- Exportación de Resultados: Opción para guardar el informe generado en un archivo de salida.
+### Ejecución
+Opcion 1 (No modularizado)
 
-- Interfaz Intuitiva: Menú sencillo directamente en la terminal.
-
-## 📁 Estructura del Proyecto
-
+```bash
+python src/base_contador.py
 ```
-contador-palabras/
-│
-├── README.md               # Documentación principal
-├── .gitignore              # Archivos excluidos de Git
-├── requirements.txt        # Dependencias del proyecto
-├── src/
-│   └── contador.py         # Lógica principal del programa
-├── textos/
-│   └── ejemplo.txt         # Archivo de ejemplo para pruebas
-└── docs/
-    └── asistencia_ia.md    # Registro de prompts y ayuda de IA
-```
-## 🚀 Instalación y Uso
-### 1. Clonar el repositorio
-```Bash
-git clone https://github.com/zombiradiactivo/Tareas-Extras-Dicampus.git
-cd contador-palabras
-```
-### 2. Instalar dependencias
-
-Si el proyecto utiliza librerías externas (especificadas en requirements.txt):
-````Bash
-pip install -r requirements.txt
+Opcion 2 (Modularizado)
+````bash
+python -m src.main
 ````
-### 3. Ejecutar la aplicación
 
-Para iniciar el analizador, ejecuta el script principal desde la raíz:
-````Bash
-python src/contador.py
-````
-## 📊 Ejemplo de Funcionamiento
+## 📊 Métricas Incluidas
 
-Al ejecutar el programa, podrás elegir entre:
+    Básicas: Conteo de palabras, caracteres, oraciones y párrafos.
 
-    Modo Manual: Escribes el texto y recibes el conteo al instante.
+    Léxicas: Riqueza léxica (%), longitud promedio de palabras.
 
-    Modo Archivo: Proporcionas la ruta (ej. textos/ejemplo.txt) y el sistema procesará el contenido automáticamente.
+    Frecuencia: Top 5 de palabras más usadas (filtrando conectores comunes).
 
-    Nota: El programa limpia automáticamente signos de puntuación comunes para asegurar que el conteo de palabras sea preciso.
+    Extremos: Identificación de la palabra más larga y más corta.
 
-## 🛠️ Tecnologías utilizadas
+## 🧪 Pruebas de Casos Borde (Edge Cases)
 
-    Lenguaje: Python 3.x
+El sistema ha sido testeado para:
 
-    Librerías: os, sys (estándar de Python)
+    Texto vacío: El programa informa que no hay contenido sin cerrarse.
+
+    Solo números: Los números se tratan como tokens pero no afectan la riqueza léxica si no son palabras.
+
+    Un solo carácter: Identificado correctamente como 1 palabra de longitud media 1.0.
+
+    Archivos inexistentes: Manejo de excepciones con mensajes claros al usuario.
+
+## 📂 Estructura
+
+    src/: Código fuente.
+
+    textos/: Archivos de entrada de ejemplo.
+
+    docs/: Informes exportados y documentación.
+
+    ultis/: Logica de analisis y logica de entrada / salida
+
+    config/: Configuraciones (usadas para filtrar palabras frecuentes)
+

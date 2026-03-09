@@ -80,3 +80,10 @@ Prompt 6
 ● Incluir en el informe: fecha, hora, fuente del texto y todas las estadísticas
 ● Confirmar al usuario la ruta donde se ha guardado el archivo
 
+Prompt 7
+
+● Agregar docstrings a todas las funciones siguiendo PEP 257
+● Refactorizar el código: cada función hace una sola cosa (principio SRP)
+● Revisar y completar el README con instrucciones de uso y ejemplos de ejecución
+● Crear el archivo docs/asistencia_ia.md documentando todos los prompts usados con IA
+● Probar todos los casos edge: texto vacío, un solo carácter, texto con solo números

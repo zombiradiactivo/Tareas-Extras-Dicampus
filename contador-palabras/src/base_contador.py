@@ -4,6 +4,8 @@ import sys
 import re
 import os
 
+# --- ENTRADA Y SALIDA (I/O) ---
+
 def capturar_texto_terminal():
     """
     Pide al usuario introducir texto multilínea. 
@@ -39,6 +41,8 @@ def capturar_texto_terminal():
         print("Operación cancelada por el usuario.")
         return None
     
+# --- LÓGICA DE ANÁLISIS (SRP) ---
+
 def contar_oraciones(texto):
     """
     Cuenta oraciones basándose en los delimitadores . ! y ?
@@ -148,6 +152,8 @@ def cargar_archivo(ruta):
         print(f"❌ Ocurrió un error inesperado: {e}")
     
     return None
+
+# --- INTERFAZ Y FLUJO ---
 
 def mostrar_informe(texto):
     # Cálculos previos

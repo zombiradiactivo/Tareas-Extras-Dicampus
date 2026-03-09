@@ -1,5 +1,6 @@
 import sys
 import re
+from collections import Counter
 import os
 
 def capturar_texto_terminal():
@@ -60,6 +61,26 @@ def contar_parrafos(texto):
     parrafos = re.split(r'\n\s*\n', texto.strip())
     return len(parrafos)
 
+def obtener_palabras_frecuentes(texto, n=5):
+    """
+    Limpia el texto, filtra palabras vacías y devuelve las N más comunes.
+    """
+    # 1. Convertir a minúsculas y limpiar caracteres no alfanuméricos
+    texto_limpio = re.sub(r'[^\w\s]', '', texto.lower())
+    
+    # 2. Tokenizar (convertir en lista de palabras)
+    palabras = texto_limpio.split()
+    
+    # 3. Lista de palabras vacías a ignorar
+    stop_words = {'el', 'la', 'de', 'que', 'y', 'en', 'a', 'un', 'los', 'las', 'con', 'por'}
+    
+    # 4. Filtrar palabras
+    palabras_filtradas = [p for p in palabras if p not in stop_words and len(p) > 1]
+    
+    # 5. Contar y obtener el TOP N
+    conteo = Counter(palabras_filtradas)
+    return conteo.most_common(n)
+
 def mostrar_informe(texto):
     # Cálculos previos
     palabras = len(texto.split())
@@ -71,6 +92,9 @@ def mostrar_informe(texto):
     oraciones = contar_oraciones(texto)
     parrafos = contar_parrafos(texto)
     
+    # Nueva métrica: Top 5 palabras
+    top_5 = obtener_palabras_frecuentes(texto, n=5)
+
     print("\n" + "="*30)
     print("📋 INFORME DE ANÁLISIS")
     print("="*30)
@@ -80,22 +104,15 @@ def mostrar_informe(texto):
     print(f"🔹 Oraciones:   {oraciones}")
     print(f"🔹 Párrafos:    {parrafos}")
     print("="*30 + "\n")
+    print("🔝 TOP 5 PALABRAS MÁS FRECUENTES:")
+    
+    for i, (palabra, frec) in enumerate(top_5, 1):
+        print(f"  {i}. '{palabra}': {frec} apariciones")
+    
+    print("="*40 + "\n")
+
 
 if __name__ == "__main__":
     texto = capturar_texto_terminal()
-    
     if texto:
-
-
         mostrar_informe(texto)
-
-
-
-        # # Aquí llamarías a tus funciones de conteo
-        # print(f"Procesando {len(texto.split())} palabras...")
-
-        # texto_sin_doble_espacios = texto.replace('  ',' ')
-        # print(f"Numero de caracteres con espacios {len(texto_sin_doble_espacios)} espacios dobles cuentan como 1")
-
-        # texto_sin_espacios = texto_sin_doble_espacios.replace(' ','')
-        # print(f"Numero de caracteres sin espacios {len(texto_sin_espacios)}")

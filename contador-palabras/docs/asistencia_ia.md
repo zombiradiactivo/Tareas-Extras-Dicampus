@@ -27,3 +27,11 @@ Prompt 2
 ● Permitir introducir varias líneas usando un delimitador (ej: línea vacía para terminar)
 ● Mostrar el texto introducido de vuelta al usuario para confirmarlo
 ● Manejar el caso en que el usuario no introduzca nada
+
+Prompt 3 
+
+● Importar Counter del módulo collections
+● Crear función que liste las N palabras más frecuentes del texto
+● Ignorar mayúsculas y minúsculas al contar (convertir todo a lower())
+● Filtrar palabras vacías comunes: 'el', 'la', 'de', 'que', 'y', 'en', 'a', 'un'
+● Mostrar el TOP 5 de palabras con su número de apariciones

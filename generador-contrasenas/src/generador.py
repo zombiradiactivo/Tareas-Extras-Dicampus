@@ -1,31 +1,46 @@
 import string
 import secrets
 
-def generar_contrasena_basica(longitud=12):
+def generar_contrasena(longitud=16):
     """
     Genera una contraseña segura combinando todos los tipos de caracteres.
     """
-    # Definimos los grupos de caracteres
-    letras_min = string.ascii_lowercase
-    letras_may = string.ascii_uppercase
-    numeros = string.digits
-    simbolos = string.punctuation
-    
-    # Combinamos todos los caracteres posibles
-    todos_los_caracteres = letras_min + letras_may + numeros + simbolos
-    
-    # Generamos la contraseña asegurando aleatoriedad criptográfica
-    # secrets.choice es ideal para este propósito
-    contrasena = ''.join(secrets.choice(todos_los_caracteres) for _ in range(longitud))
-    
+    caracteres = string.ascii_letters + string.digits + string.punctuation
+    # Usamos secrets.choice para una selección criptográficamente segura
+    contrasena = ''.join(secrets.choice(caracteres) for _ in range(longitud))
     return contrasena
 
-# --- Bloque de ejecución ---
+def obtener_longitud_valida():
+    """
+    Solicita y valida la entrada del usuario para la longitud.
+    """
+    while True:
+        entrada = input("\nIntroduce la longitud deseada (8-128) [Presiona Enter para 16]: ").strip()
+        
+        # Si el usuario solo presiona Enter, usamos el valor por defecto
+        if not entrada:
+            return 16
+        
+        # Validamos que sea un número y esté en el rango
+        try:
+            n = int(entrada)
+            if 8 <= n <= 128:
+                return n
+            else:
+                print("❌ Error: La longitud debe estar entre 8 y 128.")
+        except ValueError:
+            print("❌ Error: Por favor, introduce un número entero válido.")
+
+# --- Bloque Principal ---
 if __name__ == "__main__":
-    nueva_clave = generar_contrasena_basica()
+    print("--- 🔐 Configuración de tu Contraseña Segura ---")
     
-    print("-" * 30)
-    print("GENERADOR DE CONTRASENAS")
-    print("-" * 30)
-    print(f"Tu nueva contraseña de 12 caracteres es: {nueva_clave}")
-    print("-" * 30)
+    # Obtenemos la longitud validada
+    largo = obtener_longitud_valida()
+    
+    # Generamos y mostramos el resultado
+    password = generar_contrasena(largo)
+    
+    print("\n" + "="*40)
+    print(f"✅ Tu contraseña generada es:\n{password}")
+    print("="*40)

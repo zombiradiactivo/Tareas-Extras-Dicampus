@@ -39,3 +39,9 @@ Prompt 4
 ● Construir el conjunto de caracteres dinámicamente según las opciones
 ● Garantizar que al menos un tipo de carácter esté siempre activado
 
+Prompt 5
+
+● Crear función separada que evalúe la fortaleza de una contraseña
+● Criterios: longitud, presencia de mayúsculas, minúsculas, números y símbolos
+● Devolver una puntuación: Débil / Media / Fuerte / Muy fuerte
+● Mostrar el resultado de la evaluación junto a la contraseña generada

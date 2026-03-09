@@ -35,3 +35,11 @@ Prompt 3
 ● Ignorar mayúsculas y minúsculas al contar (convertir todo a lower())
 ● Filtrar palabras vacías comunes: 'el', 'la', 'de', 'que', 'y', 'en', 'a', 'un'
 ● Mostrar el TOP 5 de palabras con su número de apariciones
+
+Prompt 4 
+
+● Calcular la longitud media de las palabras del texto
+● Contar el número de palabras únicas (sin repeticiones)
+● Calcular el porcentaje de palabras únicas sobre el total
+● Identificar la palabra más larga y la más corta del texto
+● Mostrar todas las estadísticas en un bloque de resultados bien formateado

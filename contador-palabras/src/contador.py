@@ -81,6 +81,41 @@ def obtener_palabras_frecuentes(texto, n=5):
     conteo = Counter(palabras_filtradas)
     return conteo.most_common(n)
 
+def calcular_estadisticas_lexicas(texto):
+    """
+    Calcula métricas avanzadas: longitud media, palabras únicas y extremos.
+    """
+    # Limpieza estándar para conteo preciso
+    texto_limpio = re.sub(r'[^\w\s]', '', texto.lower())
+    palabras = texto_limpio.split()
+    
+    if not palabras:
+        return None
+
+    # 1. Palabras únicas (Vocabulario)
+    palabras_unicas = set(palabras)
+    num_unicas = len(palabras_unicas)
+    
+    # 2. Porcentaje de palabras únicas (Riqueza léxica)
+    porcentaje_unicas = (num_unicas / len(palabras)) * 100
+    
+    # 3. Longitud media (Suma de caracteres de todas las palabras / total palabras)
+    longitud_media = sum(len(p) for p in palabras) / len(palabras)
+    
+    # 4. Palabra más larga y más corta
+    # Usamos el texto original (sin lower) para que luzcan mejor en el informe
+    palabras_originales = re.sub(r'[^\w\s]', '', texto).split()
+    palabra_larga = max(palabras_originales, key=len)
+    palabra_corta = min(palabras_originales, key=len)
+
+    return {
+        "unicas": num_unicas,
+        "porcentaje": porcentaje_unicas,
+        "media": longitud_media,
+        "larga": palabra_larga,
+        "corta": palabra_corta
+    }
+
 def mostrar_informe(texto):
     # Cálculos previos
     palabras = len(texto.split())
@@ -111,8 +146,33 @@ def mostrar_informe(texto):
     
     print("="*40 + "\n")
 
+def mostrar_informe_avanzado(texto):
+    stats = calcular_estadisticas_lexicas(texto)
+    if not stats:
+        print("No hay suficiente texto para analizar.")
+        return
+
+    print("\n" + "╔" + "═"*45 + "╗")
+    print("║" + "       📊 RESULTADOS DEL ANÁLISIS       ".center(45) + "║")
+    print("╠" + "═"*45 + "╣")
+    
+    # Sección 1: Dimensiones
+    print(f"║ 📝 Palabras totales: {len(texto.split()):<22} ║")
+    print(f"║ 🔍 Palabras únicas:  {stats['unicas']:<22} ║")
+    print(f"║ 📈 Riqueza léxica:   {stats['porcentaje']:>6.2f}%                ║")
+    
+    print("╠" + "─"*45 + "╢")
+    
+    # Sección 2: Estructura
+    print(f"║ 📏 Longitud media:   {stats['media']:>6.2f} caracteres        ║")
+    print(f"║ 🚀 Palabra más larga: {stats['larga'][:20]:<20} ║")
+    print(f"║ 📍 Palabra más corta: {stats['corta'][:20]:<20} ║")
+    
+    print("╚" + "═"*45 + "╝\n")
+
 
 if __name__ == "__main__":
     texto = capturar_texto_terminal()
     if texto:
         mostrar_informe(texto)
+        mostrar_informe_avanzado(texto)

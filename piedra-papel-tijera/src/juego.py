@@ -1,3 +1,5 @@
+import random
+
 def obtener_opciones():
     # Lista de opciones basada en el orden de las reglas proporcionadas
     return [
@@ -29,5 +31,16 @@ def capturar_eleccion_jugador():
         except ValueError:
             print("Error: Entrada no válida. Introduce un número entero.")
 
+def generar_eleccion_computadora(opciones):
+    """
+    Selecciona un elemento aleatorio de la lista de opciones.
+    """
+    eleccion_ia = random.choice(opciones)
+    print(f"\n🤖 La computadora ha elegido: {eleccion_ia}")
+    return eleccion_ia
+
 # Ejemplo de uso:
-eleccion_final = capturar_eleccion_jugador()
+# eleccion_final = capturar_eleccion_jugador()
+opciones_disponibles = obtener_opciones()
+usuario = capturar_eleccion_jugador()
+computadora = generar_eleccion_computadora(opciones_disponibles)

@@ -45,3 +45,25 @@ Prompt 5
 ● Criterios: longitud, presencia de mayúsculas, minúsculas, números y símbolos
 ● Devolver una puntuación: Débil / Media / Fuerte / Muy fuerte
 ● Mostrar el resultado de la evaluación junto a la contraseña generada
+
+Prompt 6
+
+● Preguntar al usuario cuántas contraseñas quiere generar (1 a 10)
+● Generar todas las contraseñas con los mismos parámetros
+● Mostrarlas numeradas con su evaluación de fortaleza al lado
+● Validar que el número sea un entero positivo en rango
+
+Prompt 7
+
+● Añadir opción de excluir caracteres confusos visualmente: 0, O, l, I, 1
+● Preguntar al usuario si quiere activar esta opción
+● Filtrar esos caracteres del conjunto antes de generar la contraseña
+● Mostrar cuántos caracteres disponibles quedan tras el filtrado
+
+Prompt 8
+
+● Preguntar al usuario si quiere guardar las contraseñas generadas
+● Crear o abrir el archivo contrasenas.txt en modo append
+● Escribir cada contraseña con fecha, hora y nivel de fortaleza
+● Confirmar al usuario que el archivo se ha guardado correctamente
+

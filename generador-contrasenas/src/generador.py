@@ -1,5 +1,6 @@
 import string
 import secrets
+from datetime import datetime
 
 def generar_contrasena(longitud, incluir_mayus, incluir_nums, incluir_simb, excluir_confusos):
     """
@@ -81,6 +82,17 @@ def evaluar_fortaleza(password):
     else:
         return "Débil ❌", "ROJO"
 
+def guardar_en_archivo(lista_passwords):
+    """Guarda las contraseñas generadas en un archivo de texto con timestamp."""
+    fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        with open("contrasenas.txt", "a", encoding="utf-8") as f:
+            f.write(f"\n--- Sesión: {fecha_actual} ---\n")
+            for pwd, fort in lista_passwords:
+                f.write(f"[{fecha_actual}] PWD: {pwd} | Fortaleza: {fort}\n")
+        print(f"\n✅ ¡Éxito! Las contraseñas se han guardado en 'contrasenas.txt'.")
+    except Exception as e:
+        print(f"❌ Error al guardar el archivo: {e}")
 
 def configurar_generacion():
     print("\n--- 🛠️  Configuración de Seguridad ---")
@@ -111,13 +123,19 @@ def configurar_generacion():
     print(f"{'N°':<4} | {'Contraseña':<20} | {'Fortaleza'}")
     print("-" * 50)
     
+    resultados = [] # Lista para almacenar temporalmente y luego guardar
     for i in range(1, cantidad + 1):
         pwd = generar_contrasena(longitud, mayus, nums, simbs, excluir)
         fortaleza = evaluar_fortaleza(pwd)
+        resultados.append((pwd, fortaleza))
         # Formateo de columnas para que se vea ordenado
         print(f"{i:<4} | {pwd:<20} | {fortaleza}")
         
     print("="*50)
+
+    # Lógica de guardado solicitada
+    if obtener_si_no("\n¿Deseas guardar estas contraseñas en un archivo?"):
+        guardar_en_archivo(resultados)
 
 
 if __name__ == "__main__":

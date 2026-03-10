@@ -12,3 +12,24 @@ Prompt 2
 ● Capturar la elección del jugador por teclado
 ● Convertir el número introducido al nombre de la elección
 
+Prompt 3
+
+● Importar el módulo random
+● Crear función que genere una elección aleatoria para la computadora
+● Mostrar por pantalla qué ha elegido la computadora
+
+Prompt 4
+
+● Crear función que compare la elección del jugador con la de la computadora
+● Implementar la lógica completa: Piedra vence Tijera, Tijera vence Papel, Papel vence Piedra
+● Devolver el resultado de la ronda: Victoria, Derrota o Empate
+● Mostrar el resultado por pantalla con un mensaje claro
+
+El Commit 5: Validaciones de entrada del ejercicio no lo hago porque ya lo tengo 
+
+Prompt 5
+
+● Crear variables para llevar el marcador: victorias, derrotas y empates
+● Actualizar el marcador después de cada ronda
+● Mostrar el marcador actual al final de cada ronda
+

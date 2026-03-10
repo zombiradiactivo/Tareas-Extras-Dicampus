@@ -1,5 +1,10 @@
 import random
 
+# 1. Inicialización de variables (Marcador)
+victorias = 0
+derrotas = 0
+empates = 0
+
 def obtener_opciones():
     # Lista de opciones basada en el orden de las reglas proporcionadas
     return [
@@ -45,6 +50,29 @@ def mostrar_menu(opciones):
         print(f"{i}. {opcion}")
     print("---------------------------------")
 
+def actualizar_marcador(resultado, v, d, e):
+    """
+    Actualiza los contadores globales basándose en el resultado de la ronda.
+    """
+    if resultado == "Victoria":
+        v += 1
+    elif resultado == "Derrota":
+        d += 1
+    else:
+        e += 1
+    return v, d, e
+
+def mostrar_estadisticas(v, d, e):
+    """
+    Muestra el marcador actual de forma visual en la terminal.
+    """
+    print("\n" + "="*30)
+    print(f"📊 MARCADOR ACTUAL:")
+    print(f"🏆 Victorias: {v}")
+    print(f"💀 Derrotas:  {d}")
+    print(f"🤝 Empates:   {e}")
+    print("="*30 + "\n")
+
 def capturar_eleccion_jugador():
     opciones = obtener_opciones()
     mostrar_menu(opciones)
@@ -73,6 +101,8 @@ def generar_eleccion_computadora(opciones):
 # Ejemplo de uso:
 # eleccion_final = capturar_eleccion_jugador()
 opciones_disponibles = obtener_opciones()
-usuario = capturar_eleccion_jugador()
+jugador = capturar_eleccion_jugador()
 computadora = generar_eleccion_computadora(opciones_disponibles)
-ganador = determinar_ganador(usuario, computadora)
+resultado_ronda = determinar_ganador(jugador, computadora)
+victorias, derrotas, empates = actualizar_marcador(resultado_ronda, victorias, derrotas, empates)
+mostrar_estadisticas(victorias, derrotas, empates)

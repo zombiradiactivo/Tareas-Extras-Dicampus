@@ -1,6 +1,22 @@
+import os
 import string
 import secrets
 from datetime import datetime
+
+# --- FUNCIONES DE UTILIDAD ---
+
+def limpiar_pantalla():
+    """Limpia la terminal según el sistema operativo."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def mostrar_bienvenida():
+    """Muestra el banner principal del programa."""
+    limpiar_pantalla()
+    print("="*50)
+    print("     🛡️  GENERADOR DE CONTRASEÑAS  🛡️     ")
+    print("="*50)
+
+# --- LÓGICA DE NEGOCIO (Basada en tu código original) ---
 
 def generar_contrasena(longitud, incluir_mayus, incluir_nums, incluir_simb, excluir_confusos):
     """
@@ -137,7 +153,97 @@ def configurar_generacion():
     if obtener_si_no("\n¿Deseas guardar estas contraseñas en un archivo?"):
         guardar_en_archivo(resultados)
 
+# --- NUEVAS FUNCIONALIDADES DE MENÚ ---
+
+def ver_historial():
+    """Lee y muestra el contenido de contrasenas.txt."""
+    limpiar_pantalla()
+    print("--- 📜 HISTORIAL DE CONTRASEÑAS ---")
+    try:
+        if os.path.exists("contrasenas.txt"):
+            with open("contrasenas.txt", "r", encoding="utf-8") as f:
+                print(f.read())
+        else:
+            print("\nNo se encontró ningún historial previo.")
+    except Exception as e:
+        print(f"Error al leer el archivo: {e}")
+    
+    input("\nPresiona Enter para volver al menú...")
+
+def menu_generar():
+    """Submenú de configuración y generación."""
+    mostrar_bienvenida()
+    print("\n--- 🛠️  Configuración de Seguridad ---")
+    
+    # Parámetros rápidos
+    try:
+
+        # 1. Obtener longitud (reutilizando lógica previa)
+        longitud = 16
+        entrada_l = input("Longitud (8-128) [Enter para 16]: ").strip()
+        if entrada_l:
+            try:
+                n = int(entrada_l)
+                longitud = n if 8 <= n <= 128 else 16
+            except ValueError:
+                pass
+
+        # 2. Obtener preferencias de tipos
+        # Nota: Si el usuario dice 'no' a todo, por defecto usaremos minúsculas
+        mayus = obtener_si_no("¿Incluir MAYÚSCULAS?")
+        nums = obtener_si_no("¿Incluir Números?")
+        simbs = obtener_si_no("¿Incluir Símbolos especiales?")
+
+        # Preguntar por exclusión de confusos
+        excluir = obtener_si_no("¿Excluir caracteres confusos? (0, O, l, I, 1)")
+
+        # 3. Generar y mostrar
+        cantidad = obtener_cantidad()
+
+    except ValueError:
+        print("❌ Entrada inválida. Usando valores por defecto (Longitud 32)(Si a todo).")
+        longitud, cantidad, mayus, nums, simbs, excluir = 32, 1, 1, 1, 1, 1
+
+    
+    print("\n" + "="*50)
+    print(f"{'N°':<4} | {'Contraseña':<20} | {'Fortaleza'}")
+    print("-" * 50)
+
+    resultados = []
+    print("\n" + "-"*50)
+    for i in range(1, cantidad + 1):
+        pwd = generar_contrasena(longitud, mayus, nums, simbs, excluir)
+        fortaleza = evaluar_fortaleza(pwd)
+        resultados.append((pwd, fortaleza))
+        print(f"{i:<4} | {pwd:<20} | {fortaleza}")
+    print("-" * 50)
+
+    if obtener_si_no("\n¿Deseas guardar estas contraseñas en un archivo?"):
+        guardar_en_archivo(resultados)
+    
+    input("\nPresiona Enter para volver...")
+
+# --- BUCLE PRINCIPAL ---
+
+def main():
+    while True:
+        mostrar_bienvenida()
+        print("1. 🔑 Generar contraseña")
+        print("2. 📜 Ver historial")
+        print("3. 🚪 Salir")
+        
+        opcion = input("\nSelecciona una opción: ").strip()
+
+        if opcion == "1":
+            menu_generar()
+        elif opcion == "2":
+            ver_historial()
+        elif opcion == "3":
+            print("\n¡Gracias por usar el Generador! Protege bien tus claves. 👋")
+            break
+        else:
+            print("❌ Opción no válida.")
+            input("Presiona Enter para intentar de nuevo...")
 
 if __name__ == "__main__":
-    configurar_generacion()
-    
+    main()

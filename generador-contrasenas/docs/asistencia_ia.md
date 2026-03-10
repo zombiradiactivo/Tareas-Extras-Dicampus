@@ -67,3 +67,11 @@ Prompt 8
 ● Escribir cada contraseña con fecha, hora y nivel de fortaleza
 ● Confirmar al usuario que el archivo se ha guardado correctamente
 
+Prompt 9 
+
+● Crear pantalla de bienvenida con el título del programa
+● Crear menú principal con opciones: Generar contraseña, Ver historial, Salir
+● Implementar bucle principal que mantenga el menú activo hasta que el usuario salga
+● Limpiar la terminal entre operaciones para mejorar la legibilidad
+
+

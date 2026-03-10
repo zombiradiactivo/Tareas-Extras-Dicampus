@@ -28,7 +28,7 @@ En esta modalidad, cada elemento vence a otros 7 elementos específicos. A conti
 |Dragon	    | Devil, Lightning, Gun, Rock, Fire, Scissors, Snake |
 |Devil	    | Lightning, Gun, Rock, Fire, Scissors, Snake, Human |
 |Lightning	| Gun, Rock, Fire, Scissors, Snake, Human, Tree |
-|Gun	Rock,   | Fire, Scissors, Snake, Human, Tree, Wolf |
+|Gun	   | Rock, Fire, Scissors, Snake, Human, Tree, Wolf |
 |Rock	    | Fire, Scissors, Snake, Human, Tree, Wolf, Sponge |
 |Fire	    | Scissors, Snake, Human, Tree, Wolf, Sponge, Paper |
 |Scissors	| Snake, Human, Tree, Wolf, Sponge, Paper, Air |

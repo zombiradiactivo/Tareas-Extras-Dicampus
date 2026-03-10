@@ -98,11 +98,46 @@ def generar_eleccion_computadora(opciones):
     print(f"\n🤖 La computadora ha elegido: {eleccion_ia}")
     return eleccion_ia
 
-# Ejemplo de uso:
-# eleccion_final = capturar_eleccion_jugador()
-opciones_disponibles = obtener_opciones()
-jugador = capturar_eleccion_jugador()
-computadora = generar_eleccion_computadora(opciones_disponibles)
-resultado_ronda = determinar_ganador(jugador, computadora)
-victorias, derrotas, empates = actualizar_marcador(resultado_ronda, victorias, derrotas, empates)
-mostrar_estadisticas(victorias, derrotas, empates)
+def jugar_partida():
+    # 1. Configuración de la partida
+    while True:
+        try:
+            total_rondas = int(input("¿Cuántas rondas quieres jugar?: "))
+            if total_rondas > 0:
+                break
+            print("❌ Por favor, introduce un número mayor que 0.")
+        except ValueError:
+            print("❌ Entrada no válida. Debes introducir un número entero.")
+
+    # Inicialización de marcadores y opciones
+    v, d, e = 0, 0, 0
+    opciones = obtener_opciones()
+    
+    # 2. Bucle principal del juego
+    for ronda_actual in range(1, total_rondas + 1):
+        print(f"\n🔔 RONDA {ronda_actual} de {total_rondas}")
+        
+        # Turno del Jugador
+        jugador = capturar_eleccion_jugador()
+        
+        # Turno de la Computadora
+        computadora = generar_eleccion_computadora(opciones)
+        
+        # Combate y Resultado
+        resultado = determinar_ganador(jugador, computadora)
+        
+        # Actualización de Estadísticas
+        v, d, e = actualizar_marcador(resultado, v, d, e)
+        mostrar_estadisticas(v, d, e)
+
+    # 3. Cierre de la partida
+    print("\n--- ¡PARTIDA FINALIZADA! ---")
+    if v > d:
+        print("🎉 ¡Felicidades! Has ganado la sesión.")
+    elif d > v:
+        print("💀 La computadora ha ganado esta vez. ¡Sigue intentándolo!")
+    else:
+        print("🤝 ¡Ha sido un empate técnico!")
+
+if __name__ == "__main__":
+    jugar_partida()

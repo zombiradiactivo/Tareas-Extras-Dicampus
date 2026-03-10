@@ -33,3 +33,10 @@ Prompt 5
 ● Actualizar el marcador después de cada ronda
 ● Mostrar el marcador actual al final de cada ronda
 
+Prompt 6
+
+● Preguntar al jugador cuántas rondas quiere jugar al inicio de la partida
+● Validar que el número de rondas sea un entero positivo
+● Implementar el bucle principal del juego para gestionar todas las rondas
+● Mostrar el número de ronda actual (ej: Ronda 2 de 5)
+

@@ -75,3 +75,10 @@ Prompt 9
 ● Limpiar la terminal entre operaciones para mejorar la legibilidad
 
 
+Prompt 10
+
+● Agregar docstrings a todas las funciones siguiendo PEP 257
+● Refactorizar el código: separar cada funcionalidad en su propia función
+● Revisar y completar el README con instrucciones de uso y ejemplos
+● Probar todos los casos edge: longitud mínima, sin símbolos, máximas contraseñas
+

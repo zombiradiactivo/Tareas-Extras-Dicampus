@@ -1,9 +1,35 @@
+import os
 import random
 
 # 1. Inicialización de variables (Marcador)
 victorias = 0
 derrotas = 0
 empates = 0
+
+
+def limpiar_pantalla():
+    # Limpia la terminal según el sistema operativo (Windows o Unix/Linux)
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def obtener_emoji(opcion):
+    # Mapeo de emojis para las 15 variantes [cite: 1-16]
+    emojis = {
+        "Human": "👤", "Tree": "🌳", "Wolf": "🐺", "Sponge": "🧽", "Paper": "📄",
+        "Air": "💨", "Water": "💧", "Dragon": "🐉", "Devil": "😈", "Lightning": "⚡",
+        "Gun": "🔫", "Rock": "🪨", "Fire": "🔥", "Scissors": "✂️", "Snake": "🐍"
+    }
+    return emojis.get(opcion, "❓")
+
+def mostrar_bienvenida():
+    limpiar_pantalla()
+    print("="*50)
+    print("      SÚPER PIEDRA-PAPEL-TIJERAS: NIVEL 2      ")
+    print("="*50)
+    print("\nREGLAS RÁPIDAS:")
+    print("Cada elemento vence a exactamente 7 contrincantes. [cite: 1]")
+    print("Ejemplo: El Humano (Human) vence a Tree, Wolf, Sponge, Paper, Air, Water y Dragon. [cite: 1-2]")
+    print("-" * 50)
+    input("\nPresiona ENTER para configurar tu partida...")
 
 def obtener_opciones():
     # Lista de opciones basada en el orden de las reglas proporcionadas
@@ -99,6 +125,7 @@ def generar_eleccion_computadora(opciones):
     return eleccion_ia
 
 def jugar_partida():
+    mostrar_bienvenida()
     # 1. Configuración de la partida
     while True:
         try:
@@ -115,20 +142,31 @@ def jugar_partida():
     
     # 2. Bucle principal del juego
     for ronda_actual in range(1, total_rondas + 1):
-        print(f"\n🔔 RONDA {ronda_actual} de {total_rondas}")
-        
+        limpiar_pantalla()
+        print(f"✨ RONDA {ronda_actual} de {total_rondas} ✨")
+        print(f"Marcador actual: 🏆 {v} | 💀 {d} | 🤝 {e}")
+        print("-" * 30)        
         # Turno del Jugador
+        limpiar_pantalla()
         jugador = capturar_eleccion_jugador()
+        emoji_jugador = obtener_emoji(jugador)
         
         # Turno de la Computadora
         computadora = generar_eleccion_computadora(opciones)
-        
+        emoji_ia = obtener_emoji(computadora)
+
+        print(f"\nSimbología del duelo:")
+        print(f"Tú: {emoji_jugador} {jugador}  VS  IA: {emoji_ia} {computadora}")
+        print("-" * 30)
+
         # Combate y Resultado
         resultado = determinar_ganador(jugador, computadora)
         
         # Actualización de Estadísticas
         v, d, e = actualizar_marcador(resultado, v, d, e)
         mostrar_estadisticas(v, d, e)
+        input("\nPresiona ENTER para continuar tu partida...")
+
 
     # 3. Cierre de la partida
     print("\n--- ¡PARTIDA FINALIZADA! ---")

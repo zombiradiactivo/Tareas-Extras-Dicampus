@@ -40,3 +40,10 @@ Prompt 6
 ● Implementar el bucle principal del juego para gestionar todas las rondas
 ● Mostrar el número de ronda actual (ej: Ronda 2 de 5)
 
+Prompt 7
+
+● Crear pantalla de bienvenida con el título del juego y las reglas
+● Limpiar la pantalla entre rondas usando os.system('cls' o 'clear')
+● Añadir separadores visuales para mejorar la legibilidad
+● Mostrar los emojis o símbolos de cada elección (🪨 📄 ✂ ....)
+

@@ -25,10 +25,6 @@ def mostrar_bienvenida():
     print("="*50)
     print("      SÚPER PIEDRA-PAPEL-TIJERAS: NIVEL 2      ")
     print("="*50)
-    print("\nREGLAS RÁPIDAS:")
-    print("Cada elemento vence a exactamente 7 contrincantes. [cite: 1]")
-    print("Ejemplo: El Humano (Human) vence a Tree, Wolf, Sponge, Paper, Air, Water y Dragon. [cite: 1-2]")
-    print("-" * 50)
     input("\nPresiona ENTER para configurar tu partida...")
 
 def obtener_opciones():
@@ -42,21 +38,21 @@ def obtener_opciones():
 def determinar_ganador(jugador, computadora):
     # Diccionario basado en las reglas de Nivel 2 [cite: 1-16]
     reglas = {
-        "Human": ["Tree", "Wolf", "Sponge", "Paper", "Air", "Water", "Dragon"], # [cite: 1, 2]
-        "Tree": ["Wolf", "Sponge", "Paper", "Air", "Water", "Dragon", "Devil"], # [cite: 2, 3]
-        "Wolf": ["Sponge", "Paper", "Air", "Water", "Dragon", "Devil", "Lightning"], # [cite: 3, 4]
-        "Sponge": ["Paper", "Air", "Water", "Dragon", "Devil", "Lightning", "Gun"], # [cite: 4, 5]
-        "Paper": ["Air", "Water", "Dragon", "Devil", "Lightning", "Gun", "Rock"], # [cite: 5, 6]
-        "Air": ["Water", "Dragon", "Devil", "Lightning", "Gun", "Rock", "Fire"], # [cite: 6, 7]
-        "Water": ["Dragon", "Devil", "Lightning", "Gun", "Rock", "Fire", "Scissors"], # [cite: 7, 8]
-        "Dragon": ["Devil", "Lightning", "Gun", "Rock", "Fire", "Scissors", "Snake"], # [cite: 8, 9]
-        "Devil": ["Lightning", "Gun", "Rock", "Fire", "Scissors", "Snake", "Human"], # [cite: 9, 10]
-        "Lightning": ["Gun", "Rock", "Fire", "Scissors", "Snake", "Human", "Tree"], # [cite: 10, 11]
-        "Gun": ["Rock", "Fire", "Scissors", "Snake", "Human", "Tree", "Wolf"], # [cite: 11, 12]
-        "Rock": ["Fire", "Scissors", "Snake", "Human", "Tree", "Wolf", "Sponge"], # 
-        "Fire": ["Scissors", "Snake", "Human", "Tree", "Wolf", "Sponge", "Paper"], # [cite: 13, 14]
-        "Scissors": ["Snake", "Human", "Tree", "Wolf", "Sponge", "Paper", "Air"], # [cite: 14, 15]
-        "Snake": ["Human", "Tree", "Wolf", "Sponge", "Paper", "Air", "Water"] # [cite: 15, 16]
+        "Human": ["Tree", "Wolf", "Sponge", "Paper", "Air", "Water", "Dragon"],
+        "Tree": ["Wolf", "Sponge", "Paper", "Air", "Water", "Dragon", "Devil"],
+        "Wolf": ["Sponge", "Paper", "Air", "Water", "Dragon", "Devil", "Lightning"], 
+        "Sponge": ["Paper", "Air", "Water", "Dragon", "Devil", "Lightning", "Gun"], 
+        "Paper": ["Air", "Water", "Dragon", "Devil", "Lightning", "Gun", "Rock"],
+        "Air": ["Water", "Dragon", "Devil", "Lightning", "Gun", "Rock", "Fire"], 
+        "Water": ["Dragon", "Devil", "Lightning", "Gun", "Rock", "Fire", "Scissors"], 
+        "Dragon": ["Devil", "Lightning", "Gun", "Rock", "Fire", "Scissors", "Snake"], 
+        "Devil": ["Lightning", "Gun", "Rock", "Fire", "Scissors", "Snake", "Human"], 
+        "Lightning": ["Gun", "Rock", "Fire", "Scissors", "Snake", "Human", "Tree"], 
+        "Gun": ["Rock", "Fire", "Scissors", "Snake", "Human", "Tree", "Wolf"], 
+        "Rock": ["Fire", "Scissors", "Snake", "Human", "Tree", "Wolf", "Sponge"], 
+        "Fire": ["Scissors", "Snake", "Human", "Tree", "Wolf", "Sponge", "Paper"], 
+        "Scissors": ["Snake", "Human", "Tree", "Wolf", "Sponge", "Paper", "Air"], 
+        "Snake": ["Human", "Tree", "Wolf", "Sponge", "Paper", "Air", "Water"] 
     }
     if jugador == computadora:
         print(f"¡Empate! Ambos eligieron {jugador}.")
@@ -97,6 +93,8 @@ def mostrar_estadisticas(v, d, e):
     print(f"🏆 Victorias: {v}")
     print(f"💀 Derrotas:  {d}")
     print(f"🤝 Empates:   {e}")
+    print(f"Porcentaje Victorias:   {(v/(v + d + e))*100:.0f}%")
+
     print("="*30 + "\n")
 
 def capturar_eleccion_jugador():
@@ -165,7 +163,8 @@ def jugar_partida():
         # Actualización de Estadísticas
         v, d, e = actualizar_marcador(resultado, v, d, e)
         mostrar_estadisticas(v, d, e)
-        input("\nPresiona ENTER para continuar tu partida...")
+        if ronda_actual != total_rondas:
+            input("\nPresiona ENTER para continuar tu partida...")
 
 
     # 3. Cierre de la partida

@@ -1,11 +1,11 @@
-# Piedra, Papel, Tijeras, Lagarto, Spock - Nivel 2
+# Piedra, Papel, Tijeras Nivel 2
 ## 📝 Descripción del Proyecto
 
 Este proyecto es una versión extendida y avanzada del clásico juego "Piedra, Papel o Tijeras". Consiste en un simulador interactivo por terminal donde un jugador humano se enfrenta a la computadora bajo un sistema de reglas de Nivel 2, que expande significativamente las posibilidades de combate.
 
 El juego incluye:
 
-    Interfaz clara y amigable en la terminal.
+    Interfaz clara y amigable en la terminal o una interfaz grafica.
 
     Sistema de puntuación por partidas.
 
@@ -13,7 +13,7 @@ El juego incluye:
 
     Lógica de enfrentamiento basada en una matriz de 15 variantes.
 
-## ⚖️ Reglas del Juego (Nivel 2)
+## ⚖️ Reglas del Juego
 
 En esta modalidad, cada elemento vence a otros 7 elementos específicos. A continuación se detalla la tabla de victorias para cada elección:
 |Elemento	| Vence a... |
@@ -33,12 +33,23 @@ En esta modalidad, cada elemento vence a otros 7 elementos específicos. A conti
 |Fire	    | Scissors, Snake, Human, Tree, Wolf, Sponge, Paper |
 |Scissors	| Snake, Human, Tree, Wolf, Sponge, Paper, Air |
 |Snake	    | Human, Tree, Wolf, Sponge, Paper, Air, Water |
-🚀 Cómo Jugar
 
-    Inicio: Al ejecutar el script, se te presentarán las opciones disponibles.
 
-    Elección: Introduce el nombre del elemento que deseas jugar.
+## 🚀 Cómo Jugar
 
-    Resultado: La computadora elegirá una opción al azar y se determinará el ganador según la tabla anterior.
+Como ejecutar el juego: 
 
-    Estadísticas: Podrás ver el acumulado de victorias, derrotas y empates durante tu sesión.
+(Tiene 3 versiones, iguales por fuera, solo cambia la logica, no la jugabilidad)
+
+Original:
+````Bash
+Python base_juego.py
+````
+Refactorizada
+````Bash
+Python src.main
+````
+Con interfaz grafica
+````Bash
+Python src.main_gui
+````

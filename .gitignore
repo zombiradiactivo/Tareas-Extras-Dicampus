@@ -218,3 +218,4 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 generador-contrasenas/contrasenas.txt
+ahorcado/data/palabras.db

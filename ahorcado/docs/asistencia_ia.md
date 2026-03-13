@@ -10,7 +10,22 @@ existentes y añadir nuevas palabras a la base de datos. 
 Prompt 2
 
 Tareas:
+• Crear conexión con SQLite usando sqlite3
+• Crear tabla 'palabras' con campos: id, palabra, categoria, dificultad
+• Insertar al menos 20 palabras iniciales en la BD
+• Crear función para ver todas las palabras almacenadas
+
+Prompt 3
+
+Tareas:
 • Crear función que obtenga una palabra aleatoria de la BD
 • Mostrar la palabra oculta como guiones bajos (p.ej. _ _ _ _ _)
 • Registrar qué letras ya han sido adivinadas
 
+Prompt 4
+
+Tareas:
+• Capturar letra ingresada por el usuario
+• Comprobar si la letra está en la palabra
+• Actualizar la palabra oculta revelando letras correctas
+• Llevar contador de intentos fallido

@@ -1,24 +1,15 @@
-import random
-from base_datos import conectar
+import os
+from base_datos import inicializar_db, conectar
+# from validaciones import validar_letra # Todavia no implementado
 
 def obtener_palabra_aleatoria():
     """Selecciona una palabra al azar de la base de datos."""
     conn = conectar()
     cursor = conn.cursor()
-    
-    # Usamos ORDER BY RANDOM() de SQLite para eficiencia en tablas pequeñas
-    cursor.execute("SELECT palabra, categoria, dificultad FROM palabras ORDER BY RANDOM() LIMIT 1")
+    cursor.execute("SELECT palabra, categoria FROM palabras ORDER BY RANDOM() LIMIT 1")
     resultado = cursor.fetchone()
-    
     conn.close()
-    
-    if resultado:
-        return {
-            "palabra": resultado[0].upper(),
-            "categoria": resultado[1],
-            "dificultad": resultado[2]
-        }
-    return None
+    return resultado # Retorna (palabra, categoria) o None
 
 def mostrar_progreso(palabra, letras_adivinadas):
     """
@@ -47,25 +38,59 @@ def gestionar_intento(letra, letras_adivinadas):
     return True
 
 
-# Test
-if __name__ == "__main__":
-    # Inicialización
-    datos_palabra = obtener_palabra_aleatoria()
-    if datos_palabra is not None:
-        palabra_objetivo = datos_palabra['palabra']
-        letras_usadas = set() # Usamos un set para evitar duplicados y búsquedas rápidas
+def jugar():
+    # Asegurar que existan datos
+    inicializar_db()
+    
+    datos = obtener_palabra_aleatoria()
+    if not datos:
+        print("Error: No hay palabras en la base de datos.")
+        return
 
-        print(f"Categoría: {datos_palabra['categoria']}")
-        print(f"Progreso: {mostrar_progreso(palabra_objetivo, letras_usadas)}")
+    palabra_objetivo = datos[0].upper()
+    categoria = datos[1]
+    
+    letras_adivinadas = set()
+    intentos_fallidos = 0
+    MAX_INTENTOS = 6
 
-        # Ejemplo de un turno:
-        letra_usuario = "A" # Supongamos que viene de un input()
-        if gestionar_intento(letra_usuario, letras_usadas):
-            if letra_usuario in palabra_objetivo:
-                print("¡Acertaste!")
-            else:
-                print("Letra incorrecta.")
+    print(f"--- BIENVENIDO AL AHORCADO ---")
+    print(f"Categoría: {categoria}")
 
-        print(f"Letras intentadas: {', '.join(sorted(letras_usadas))}")
+    while intentos_fallidos < MAX_INTENTOS:
+        # 1. Mostrar palabra oculta (p.ej. _ _ A _ _)
+        progreso = [letra if letra in letras_adivinadas else "_" for letra in palabra_objetivo]
+        print(f"\nPalabra: {' '.join(progreso)}")
+        print(f"Intentos fallidos: {intentos_fallidos}/{MAX_INTENTOS}")
+        print(f"Letras usadas: {', '.join(sorted(letras_adivinadas))}")
+
+        # 2. Capturar letra
+        entrada = input("Introduce una letra: ").upper()
+
+        # Validación básica (puedes mover esto a validaciones.py)
+        if len(entrada) != 1 or not entrada.isalpha():
+            print("❌ Por favor, introduce solo una letra válida.")
+            continue
+
+        if entrada in letras_adivinadas:
+            print(f"⚠️ Ya habías dicho la '{entrada}'.")
+            continue
+
+        # 3. Registrar letra y comprobar
+        letras_adivinadas.add(entrada)
+
+        if entrada in palabra_objetivo:
+            print(f"✅ ¡Bien hecho! La '{entrada}' está en la palabra.")
+        else:
+            intentos_fallidos += 1
+            print(f"❌ La letra '{entrada}' no está. Pierdes un intento.")
+
+        # 4. Comprobar victoria
+        if all(letra in letras_adivinadas for letra in palabra_objetivo):
+            print(f"\n¡FELICIDADES! Ganaste. La palabra era: {palabra_objetivo}")
+            break
     else:
-        print("❌ Error: No se encontraron palabras en la base de datos.")
+        print(f"\n💥 ¡OH NO! Has sido ahorcado. La palabra era: {palabra_objetivo}")
+
+if __name__ == "__main__":
+    jugar()

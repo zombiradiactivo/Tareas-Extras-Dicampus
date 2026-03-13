@@ -47,7 +47,24 @@ Tareas:
 
 Prompt 7 
 
+Tareas:
 • Crear función para insertar una nueva palabra en la BD
 • Solicitar al usuario: palabra, categoría y dificultad
 • Verificar que la palabra no exista ya en la base de datos
 • Confirmar al usuario que la palabra fue añadida correctamente
+
+Prompt 8
+
+Tareas:
+• Validar que la letra ingresada sea solo una letra del alfabeto
+• Validar que la nueva palabra solo contenga letras (sin números ni símbolos)
+• Manejar errores de la BD con try-except
+• Convertir entradas a minúsculas automáticamente
+
+Prompt 9
+
+Tareas:
+• Mostrar las categorías disponibles en la BD
+• Permitir al usuario elegir categoría antes de empezar
+• Filtrar la consulta SQLite por categoría y/o dificultad
+• Mostrar cuántas palabras hay disponibles por categoría

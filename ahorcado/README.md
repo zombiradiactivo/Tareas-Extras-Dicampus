@@ -24,10 +24,16 @@ Preparar la Base de Datos:
 
 Asegúrate de tener SQLite instalado. Al iniciar la aplicación porprimera vez, se creará automáticamente el archivo .db con la tablade palabras (o puedes ejecutar el script de inicializaciónincluido).
 
-Ejecutar la aplicación:
+Ejecutar la aplicación (2 versiones):
+
+version 1
 ````Bash
-python ahorcado.py
+python src/base/ahorcado.py
 ````
+version 2
+```Bash
+python main.py
+```
 ## 🛠️ Tecnologías Utilizadas
 
     Lenguaje:  Python
@@ -35,7 +41,6 @@ python ahorcado.py
     Base de Datos: SQLite 3
 
     Interfaz:   Consola (CLI)
-                GUI con Tkinter (WIP)
 
 ## 📊 Estructura de la Base de Datos
 

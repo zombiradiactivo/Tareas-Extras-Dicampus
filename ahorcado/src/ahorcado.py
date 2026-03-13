@@ -1,5 +1,6 @@
 import os
 from base_datos import inicializar_db, conectar
+from dibujo import obtener_dibujo
 # from validaciones import validar_letra # Todavia no implementado
 
 def obtener_palabra_aleatoria():
@@ -83,7 +84,9 @@ def jugar():
             print(f"✅ ¡Bien hecho! La '{entrada}' está en la palabra.")
         else:
             intentos_fallidos += 1
+            print(obtener_dibujo(intentos_fallidos))
             print(f"❌ La letra '{entrada}' no está. Pierdes un intento.")
+            
 
         # 4. Comprobar victoria
         if all(letra in letras_adivinadas for letra in palabra_objetivo):

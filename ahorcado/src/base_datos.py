@@ -78,37 +78,27 @@ def obtener_todas_las_palabras():
 
 def insertar_palabra(palabra, categoria, dificultad):
     """Inserta una nueva palabra tras verificar que no existe."""
-    conn = conectar()
-    cursor = conn.cursor()
-    
-    # 1. Normalizar a mayúsculas para evitar duplicados por formato
-    palabra = palabra.strip().upper()
-    categoria = categoria.strip().capitalize()
-    dificultad = dificultad.strip().capitalize()
-    if not all(char.isalpha() or char.isspace() for char in palabra):
-        return False, "La palabra solo puede contener letras y espacios."
-
+    conn = None
     try:
-        # 2. Verificar si la palabra ya existe
-        cursor.execute("SELECT palabra FROM palabras WHERE palabra = ?", (palabra,))
-        if cursor.fetchone():
-            return False, f"La palabra '{palabra}' ya existe en el diccionario."
-
-
-        # 3. Insertar si es nueva
+        conn = conectar()
+        cursor = conn.cursor()
+        
+        # El UNIQUE en la tabla evitará duplicados a nivel DB
         cursor.execute('''
             INSERT INTO palabras (palabra, categoria, dificultad)
             VALUES (?, ?, ?)
         ''', (palabra, categoria, dificultad))
         
         conn.commit()
-        return True, f"¡Palabra '{palabra}' añadida con éxito!"
-    
-    except sqlite3.Error as e:
-        return False, f"Error de base de datos: {e}"
-    finally:
-        conn.close()
+        return True, "Palabra añadida correctamente."
 
+    except sqlite3.IntegrityError:
+        return False, "⚠️ Esa palabra ya existe en la base de datos."
+    except sqlite3.Error as e:
+        return False, f"❌ Error crítico de base de datos: {e}"
+    finally:
+        if conn:
+            conn.close()
 # Test
 
 if __name__ == "__main__":

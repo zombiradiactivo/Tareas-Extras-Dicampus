@@ -1,4 +1,4 @@
-import os
+from validaciones import validar_nueva_palabra, limpiar_entrada
 from base_datos import inicializar_db, conectar, insertar_palabra, obtener_todas_las_palabras
 from dibujo import obtener_dibujo
 # from validaciones import validar_letra # Todavia no implementado
@@ -128,26 +128,21 @@ def menu_añadir_palabra():
     """Interfaz para capturar datos de una nueva palabra."""
     print("\n--- AÑADIR NUEVA PALABRA ---")
     
-    palabra = input("Ingresa la palabra: ").strip()
-    if not all(char.isalpha() or char.isspace() for char in palabra):
-        print("❌ Error: La palabra solo debe contener letras.")
-        return
-
-    categoria = input("Ingresa la categoría (ej. Cine, Frutas): ").strip()
-    print("Dificultades disponibles: Fácil, Media, Difícil")
-    dificultad = input("Ingresa la dificultad: ").strip()
-
-    if not palabra or not categoria or not dificultad:
-        print("❌ Error: Todos los campos son obligatorios.")
-        return
-
-    # Llamada a la función de base de datos
-    exito, mensaje = insertar_palabra(palabra, categoria, dificultad)
+    entrada_usuario = input("Introduce la nueva palabra o frase: ")
     
-    if exito:
-        print(f"✅ {mensaje}")
+    # 1. Validar formato
+    es_valida, resultado = validar_nueva_palabra(entrada_usuario)
+    
+    if es_valida:
+        palabra_final = resultado # Ya viene en minúsculas y sin espacios locos
+        cat = limpiar_entrada(input("Categoría: "))
+        dif = limpiar_entrada(input("Dificultad: "))
+        
+        # 2. Intentar guardar
+        exito, mensaje = insertar_palabra(palabra_final, cat, dif)
+        print(mensaje)
     else:
-        print(f"⚠️ {mensaje}")
+        print(resultado) # Imprime el error de validación
 
 if __name__ == "__main__":
     menu_principal()

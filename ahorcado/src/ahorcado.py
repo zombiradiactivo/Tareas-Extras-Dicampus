@@ -1,5 +1,5 @@
 import os
-from base_datos import inicializar_db, conectar
+from base_datos import inicializar_db, conectar, insertar_palabra, obtener_todas_las_palabras
 from dibujo import obtener_dibujo
 # from validaciones import validar_letra # Todavia no implementado
 
@@ -18,11 +18,12 @@ def mostrar_progreso(palabra, letras_adivinadas):
     """
     representacion = ""
     for letra in palabra:
-        if letra in letras_adivinadas:
+        if letra == " ":
+            representacion += "    "  # Doble espacio para separar palabras
+        elif letra in letras_adivinadas:
             representacion += f"{letra} "
         else:
             representacion += "_ "
-    
     return representacion.strip()
 
 def gestionar_intento(letra, letras_adivinadas):
@@ -89,25 +90,64 @@ def jugar():
             
 
         # 4. Comprobar victoria
-        if all(letra in letras_adivinadas for letra in palabra_objetivo):
-            print(f"\n¡FELICIDADES! Ganaste. La palabra era: {palabra_objetivo}")
-            break
-    else:
+        letras_sin_espacios = [l for l in palabra_objetivo if l != " "]
+
+        if all(l in letras_adivinadas for l in letras_sin_espacios):
+            print(f"\n✨ ¡VICTORIA! Has adivinado la frase: {palabra_objetivo}")
+            return True
+    if intentos_fallidos >= MAX_INTENTOS:
         print(f"\n💥 ¡OH NO! Has sido ahorcado. La palabra era: {palabra_objetivo}")
 
 def menu_principal():
     """Controla el flujo de reinicio del juego."""
     # Aseguramos que la DB tenga datos al arrancar
     inicializar_db()
-    
     while True:
-        jugar()
-        
-        # --- PREGUNTAR SI DESEA OTRA PARTIDA ---
-        respuesta = input("\n¿Quieres jugar otra vez? (S/N): ").upper()
-        if respuesta != 'S':
-            print("¡Gracias por jugar! Hasta pronto.")
-            break
+            print("\n--- JUEGO DEL AHORCADO ---")
+            print("1. Jugar partida")
+            print("2. Ver diccionario")
+            print("3. Añadir nueva palabra")
+            print("4. Salir")
+            
+            opcion = input("Selecciona una opción: ")
+            
+            if opcion == "1":
+                jugar()
+            elif opcion == "2":
+                obtener_todas_las_palabras() # Función que creamos al inicio
+            elif opcion == "3":
+                menu_añadir_palabra()
+            elif opcion == "4":
+                print("¡Adiós!")
+                break
+            else:
+                print("Opción no válida.")
+
+
+def menu_añadir_palabra():
+    """Interfaz para capturar datos de una nueva palabra."""
+    print("\n--- AÑADIR NUEVA PALABRA ---")
+    
+    palabra = input("Ingresa la palabra: ").strip()
+    if not all(char.isalpha() or char.isspace() for char in palabra):
+        print("❌ Error: La palabra solo debe contener letras.")
+        return
+
+    categoria = input("Ingresa la categoría (ej. Cine, Frutas): ").strip()
+    print("Dificultades disponibles: Fácil, Media, Difícil")
+    dificultad = input("Ingresa la dificultad: ").strip()
+
+    if not palabra or not categoria or not dificultad:
+        print("❌ Error: Todos los campos son obligatorios.")
+        return
+
+    # Llamada a la función de base de datos
+    exito, mensaje = insertar_palabra(palabra, categoria, dificultad)
+    
+    if exito:
+        print(f"✅ {mensaje}")
+    else:
+        print(f"⚠️ {mensaje}")
 
 if __name__ == "__main__":
     menu_principal()

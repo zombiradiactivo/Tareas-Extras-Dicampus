@@ -44,3 +44,10 @@ Tareas:
 • Detectar cuando se han agotado los 6 intentos (derrota)
 • Mostrar mensaje de resultado y revelar la palabra completa
 • Preguntar si desea jugar otra partida
+
+Prompt 7 
+
+• Crear función para insertar una nueva palabra en la BD
+• Solicitar al usuario: palabra, categoría y dificultad
+• Verificar que la palabra no exista ya en la base de datos
+• Confirmar al usuario que la palabra fue añadida correctamente

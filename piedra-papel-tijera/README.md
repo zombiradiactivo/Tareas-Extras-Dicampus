@@ -47,9 +47,9 @@ Python base_juego.py
 ````
 Refactorizada
 ````Bash
-Python src.main
+Python -m src.main
 ````
 Con interfaz grafica
 ````Bash
-Python src.main_gui
+Python -m src.main_gui
 ````

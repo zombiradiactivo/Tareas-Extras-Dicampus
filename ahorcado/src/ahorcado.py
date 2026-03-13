@@ -95,5 +95,19 @@ def jugar():
     else:
         print(f"\n💥 ¡OH NO! Has sido ahorcado. La palabra era: {palabra_objetivo}")
 
+def menu_principal():
+    """Controla el flujo de reinicio del juego."""
+    # Aseguramos que la DB tenga datos al arrancar
+    inicializar_db()
+    
+    while True:
+        jugar()
+        
+        # --- PREGUNTAR SI DESEA OTRA PARTIDA ---
+        respuesta = input("\n¿Quieres jugar otra vez? (S/N): ").upper()
+        if respuesta != 'S':
+            print("¡Gracias por jugar! Hasta pronto.")
+            break
+
 if __name__ == "__main__":
-    jugar()
+    menu_principal()

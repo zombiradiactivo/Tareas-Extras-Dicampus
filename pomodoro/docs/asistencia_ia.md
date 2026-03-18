@@ -36,3 +36,11 @@ Tareas:
 • Crear archivo config.py con tiempos configurables
 • Permitir al usuario ajustar duración de trabajo y descanso
 • Validar que los valores sean positivos
+
+Prompt 5 
+
+Archivo: src/pomodoro.py
+Tareas:
+• Contar cuántos pomodoros se han completado
+• Implementar descanso largo cada 4 ciclos (15 min)
+• Mostrar estadísticas al final de cada ciclo

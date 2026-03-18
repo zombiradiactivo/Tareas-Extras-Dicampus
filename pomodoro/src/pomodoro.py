@@ -2,6 +2,9 @@ from config import DURACION_TRABAJO, DURACION_DESCANSO # No implementado todavia
 ## from notificaciones import enviar_notificacion # No implementado todavia
 import time
 
+# Tarea: Definir duración de descanso largo (15 min)
+DURACION_DESCANSO_LARGO = 15 * 60
+
 def cuenta_regresiva(segundos, mensaje="Tiempo restante"):
     """Realiza la cuenta regresiva mostrando el tiempo en MM:SS."""
     while segundos >= 0:
@@ -11,24 +14,49 @@ def cuenta_regresiva(segundos, mensaje="Tiempo restante"):
         segundos -= 1
     print("\n")
 
+def mostrar_estadisticas(ciclos):
+    """
+    Tarea: Mostrar estadísticas al final de cada ciclo.
+    """
+    print("-" * 30)
+    print(f"📊 ESTADÍSTICAS ACTUALES")
+    print(f"✅ Pomodoros completados: {ciclos}")
+    print(f"⏳ Próximo objetivo: {'Descanso Largo' if ciclos % 4 == 0 else 'Siguiente Pomodoro'}")
+    print("-" * 30 + "\n")
+
 def iniciar_pomodoro():
     """
     Controla el flujo de trabajo y descanso.
     """
-    # Tarea: Implementar sesión de trabajo (25 min = 1500 seg)
-    print("--- 🛠️ SESIÓN DE TRABAJO INICIADA ---")
-    print("¡A trabajar!", "Es momento de concentrarse.")
-    cuenta_regresiva(DURACION_TRABAJO, "Trabajando")
 
-    # Tarea: Notificar cambio de sesión
-    print("--- ☕ HORA DE DESCANSAR ---")
-    print("¡Descanso!", "Tómate un respiro de 5 minutos.")
+    # Tarea: Contar cuántos pomodoros se han completado
+    pomodoros_completados = 0
 
-    # Tarea: Implementar sesión de descanso (5 min = 300 seg)
-    cuenta_regresiva(DURACION_DESCANSO, "Descansando")
-    
-    print("--- ✅ CICLO COMPLETADO ---")
-    print("Ciclo terminado", "¿Listo para el siguiente?")
+    try:
+        while True:
+# 1. Sesión de Trabajo
+            print(f"🚀 Iniciando Pomodoro #{pomodoros_completados + 1}")
+            print("¡A trabajar!", f"Sesión #{pomodoros_completados + 1}")  # enviar_notificacion no implementado todavia
+            cuenta_regresiva(DURACION_TRABAJO, "Trabajando")
+            
+            pomodoros_completados += 1
+            mostrar_estadisticas(pomodoros_completados)
+
+            # 2. Determinar tipo de descanso
+            # Tarea: Implementar descanso largo cada 4 ciclos (15 min)
+            if pomodoros_completados % 4 == 0:
+                print("🧘 ¡Momento de un gran respiro! Descanso largo iniciado.")
+                print("Descanso Largo", "Te lo has ganado: 15 minutos.")  # enviar_notificacion no implementado todavia
+                cuenta_regresiva(DURACION_DESCANSO_LARGO, "Descanso Largo")
+            else:
+                print("☕ Descanso corto iniciado.")
+                print("Descanso Corto", "Tómate 5 minutos.")  # enviar_notificacion no implementado todavia
+                cuenta_regresiva(DURACION_DESCANSO, "Descanso Corto")
+            
+            print("🔔 ¡Descanso terminado! ¿Listo para el siguiente?\n")
+
+    except KeyboardInterrupt:
+        print(f"\n\n👋 Sesión finalizada. Total de pomodoros hoy: {pomodoros_completados}")
 
 if __name__ == "__main__":
     iniciar_pomodoro()

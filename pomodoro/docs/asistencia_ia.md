@@ -60,3 +60,11 @@ Tareas:
 • Permitir pausar el temporizador con una tecla
 • Reanudar desde donde se pausó
 • Mostrar estado actual (corriendo / pausado)
+
+Prompt 8
+
+Archivo: src/pomodoro.py
+Tareas:
+• Crear menú interactivo al iniciar la aplicación
+• Mostrar barra de progreso visual en terminal
+• Capturar entrada del usuario para configurar sesión

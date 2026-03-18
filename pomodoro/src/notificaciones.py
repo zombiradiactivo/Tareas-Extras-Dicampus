@@ -1,6 +1,7 @@
 import os
 import platform
 
+
 def emitir_sonido():
     """
     Tarea: Emitir sonido al terminar cada sesión (beep de terminal).
@@ -22,7 +23,7 @@ def emitir_sonido():
         # Si falla el sonido, al menos imprimimos un aviso visual
         print("🔔 [SONIDO]")
 
-def enviar_notificacion(titulo, mensaje):
+def enviar_notificacion(titulo, mensaje, mensaje2=None):
     """
     Tarea: Mostrar mensaje visual destacado al cambiar de sesión.
     Maneja sistemas operativos para notificaciones (opcional) o banners.
@@ -33,6 +34,9 @@ def enviar_notificacion(titulo, mensaje):
     print(f"{titulo.center(ancho)}")
     print("-" * ancho)
     print(f"{mensaje.center(ancho)}")
+    if mensaje2:
+        print("-" * ancho)
+        print(f"{mensaje2.center(ancho)}")
     print("=" * ancho + "\n")
     
     # Emitir la alerta sonora

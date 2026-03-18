@@ -52,3 +52,11 @@ Tareas:
 • Emitir sonido al terminar cada sesión (beep de terminal)
 • Mostrar mensaje visual destacado al cambiar de sesión
 • Manejar sistemas operativos diferentes (Windows/Linux/Mac)
+
+Prompt 7
+
+Archivo: src/pomodoro.py
+Tareas:
+• Permitir pausar el temporizador con una tecla
+• Reanudar desde donde se pausó
+• Mostrar estado actual (corriendo / pausado)

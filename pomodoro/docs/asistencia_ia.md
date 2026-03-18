@@ -44,3 +44,11 @@ Tareas:
 • Contar cuántos pomodoros se han completado
 • Implementar descanso largo cada 4 ciclos (15 min)
 • Mostrar estadísticas al final de cada ciclo
+
+Prompt 6 
+
+Archivo: src/notificaciones.py
+Tareas:
+• Emitir sonido al terminar cada sesión (beep de terminal)
+• Mostrar mensaje visual destacado al cambiar de sesión
+• Manejar sistemas operativos diferentes (Windows/Linux/Mac)

@@ -1,5 +1,5 @@
-from config import DURACION_TRABAJO, DURACION_DESCANSO # No implementado todavia
-## from notificaciones import enviar_notificacion # No implementado todavia
+from config import DURACION_TRABAJO, DURACION_DESCANSO 
+from notificaciones import enviar_notificacion 
 import time
 
 # Tarea: Definir duración de descanso largo (15 min)
@@ -36,7 +36,7 @@ def iniciar_pomodoro():
         while True:
 # 1. Sesión de Trabajo
             print(f"🚀 Iniciando Pomodoro #{pomodoros_completados + 1}")
-            print("¡A trabajar!", f"Sesión #{pomodoros_completados + 1}")  # enviar_notificacion no implementado todavia
+            enviar_notificacion("¡A trabajar!", f"Sesión #{pomodoros_completados + 1}")  
             cuenta_regresiva(DURACION_TRABAJO, "Trabajando")
             
             pomodoros_completados += 1
@@ -46,11 +46,11 @@ def iniciar_pomodoro():
             # Tarea: Implementar descanso largo cada 4 ciclos (15 min)
             if pomodoros_completados % 4 == 0:
                 print("🧘 ¡Momento de un gran respiro! Descanso largo iniciado.")
-                print("Descanso Largo", "Te lo has ganado: 15 minutos.")  # enviar_notificacion no implementado todavia
+                enviar_notificacion("Descanso Largo", "Te lo has ganado: 15 minutos.")  
                 cuenta_regresiva(DURACION_DESCANSO_LARGO, "Descanso Largo")
             else:
                 print("☕ Descanso corto iniciado.")
-                print("Descanso Corto", "Tómate 5 minutos.")  # enviar_notificacion no implementado todavia
+                enviar_notificacion("Descanso Corto", "Tómate 5 minutos.") 
                 cuenta_regresiva(DURACION_DESCANSO, "Descanso Corto")
             
             print("🔔 ¡Descanso terminado! ¿Listo para el siguiente?\n")

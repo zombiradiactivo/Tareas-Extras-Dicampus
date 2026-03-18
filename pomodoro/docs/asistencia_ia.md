@@ -29,3 +29,10 @@ Tareas:
 • Implementar sesión de descanso de 5 minutos
 • Notificar al usuario cuando cambia la sesión
 
+Prompt 4
+
+Archivo: src/config.py
+Tareas:
+• Crear archivo config.py con tiempos configurables
+• Permitir al usuario ajustar duración de trabajo y descanso
+• Validar que los valores sean positivos

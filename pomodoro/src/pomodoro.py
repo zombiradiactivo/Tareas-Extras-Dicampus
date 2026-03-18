@@ -1,4 +1,4 @@
-## from config import DURACION_TRABAJO, DURACION_DESCANSO # No implementado todavia
+from config import DURACION_TRABAJO, DURACION_DESCANSO # No implementado todavia
 ## from notificaciones import enviar_notificacion # No implementado todavia
 import time
 
@@ -18,14 +18,14 @@ def iniciar_pomodoro():
     # Tarea: Implementar sesión de trabajo (25 min = 1500 seg)
     print("--- 🛠️ SESIÓN DE TRABAJO INICIADA ---")
     print("¡A trabajar!", "Es momento de concentrarse.")
-    cuenta_regresiva(25 * 60, "Trabajando")
+    cuenta_regresiva(DURACION_TRABAJO, "Trabajando")
 
     # Tarea: Notificar cambio de sesión
     print("--- ☕ HORA DE DESCANSAR ---")
     print("¡Descanso!", "Tómate un respiro de 5 minutos.")
 
     # Tarea: Implementar sesión de descanso (5 min = 300 seg)
-    cuenta_regresiva(5 * 60, "Descansando")
+    cuenta_regresiva(DURACION_DESCANSO, "Descansando")
     
     print("--- ✅ CICLO COMPLETADO ---")
     print("Ciclo terminado", "¿Listo para el siguiente?")

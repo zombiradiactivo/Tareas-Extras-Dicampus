@@ -79,3 +79,12 @@ Tareas:
 ● Escribir en el archivo: tipo de dado, número de dados, todas las tiradas y estadísticas
 ● Confirmar al usuario el nombre y ruta del archivo guardado
 
+Prompt 9 
+
+Archivo:
+src/simulador.py
+Tareas:
+● Crear menú principal con opciones: Nueva tirada, Ver historial de sesión, Guardar, Salir
+● Implementar bucle principal que mantenga el menú activo entre tiradas
+● Limpiar la terminal entre rondas con os.system() compatible con Windows y Linux
+● Mostrar pantalla de bienvenida con el título del programa y los dados disponibles

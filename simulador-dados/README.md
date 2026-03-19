@@ -20,38 +20,30 @@ Un simulador de dados robusto basado en terminal, diseñado para entusiastas de 
 
 Asegúrate de tener instalado Python 3.x en tu sistema.
 2. Clonar el repositorio
-Bash
-
-git clone https://github.com/tu-usuario/simulador-dados.git
+````Bash
+git clone https://github.com/zombiradiactivo/Tareas-Extras-Dicampus.git
+````
 cd simulador-dados
 
-3. Instalar dependencias
-
-(Si el proyecto utiliza librerías externas como colorama o tabulate, instálalas así:)
-Bash
-
-pip install -r requirements.txt
-
-4. Ejecutar el simulador
-Bash
-
+3. Ejecutar el simulador
+````Bash
 python src/simulador.py
+````
 
 ## 🛠️ Estructura del Proyecto
 
 El proyecto sigue una estructura limpia y organizada:
-Plaintext
+````Plaintext
 
 simulador-dados/
 │
 ├── src/
 │   └── simulador.py      # Lógica principal del simulador
-├── .gitignore            # Archivos ignorados por Git
 ├── requirements.txt      # Dependencias del proyecto
 └── README.md             # Documentación (este archivo)
-
+````
 ## 📊 Ejemplo de Salida
-Plaintext
+````Plaintext
 
 --- Resultados de la Tirada (3d6) ---
 Lanzamiento 1: [5, 2, 6] | Total: 13
@@ -63,3 +55,4 @@ Visualización:
 6: ■■■■■ (1)
 5: ■■■■■ (1)
 ...
+````

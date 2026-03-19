@@ -37,3 +37,14 @@ Tareas:
 ● Lanzar todos los dados de una vez y mostrar cada resultado individualmente
 ● Mostrar también la suma total de todos los dados lanzados
 ● Validar que el número de dados sea un entero entre 1 y 10
+
+Prompt 5
+
+Archivo:
+src/simulador.py
+Tareas:
+● Preguntar al usuario cuántas veces quiere repetir la tirada (1 a 20)
+● Ejecutar todas las tiradas en un bucle y almacenar los resultados en una lista
+Módulo 2 · Estrategias de Generación de Código con IA · Dicampus
+● Mostrar cada tirada numerada con sus dados y su suma parcial
+● Calcular y mostrar la suma global de todas las tiradas

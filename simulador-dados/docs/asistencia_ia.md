@@ -6,3 +6,15 @@ Este proyecto consiste en desarrollar un simulador de lanzamiento de dados inter
 
 El simulador incluirá un historial de tiradas, estadísticas acumuladas (media, máximo, mínimo, total), unarepresentación visual de los resultados en la terminal usando barras de texto, y la posibilidad de guardar elhistorial en un archivo
 
+Prompt 2
+
+Vamos a ir haciéndolo paso a paso, solo haz lo que se pide en las tareas
+
+Archivo:
+src/simulador.py
+Tareas:
+● Importar el módulo random
+● Crear función que simule el lanzamiento de un dado de 6 caras (D6)
+● Mostrar el resultado del lanzamiento en la terminal con el símbolo del dado 🎲
+● Ejecutar la función al iniciar el programa
+

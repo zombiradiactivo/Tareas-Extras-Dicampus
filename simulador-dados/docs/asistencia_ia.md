@@ -48,3 +48,13 @@ Tareas:
 Módulo 2 · Estrategias de Generación de Código con IA · Dicampus
 ● Mostrar cada tirada numerada con sus dados y su suma parcial
 ● Calcular y mostrar la suma global de todas las tiradas
+
+Prompt 6 
+
+Archivo:
+src/simulador.py
+Tareas:
+● Crear función que calcule estadísticas sobre todas las tiradas de la sesión
+● Calcular: suma total, media por tirada, valor máximo y valor mínimo obtenidos
+● Mostrar las estadísticas al final de cada serie de lanzamientos
+● Identificar en qué tirada se obtuvo el resultado más alto y el más bajo

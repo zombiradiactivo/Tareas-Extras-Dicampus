@@ -27,3 +27,13 @@ Tareas:
 ● Mostrar al usuario el menú de tipos de dado y pedirle que elija uno
 ● Adaptar la función de lanzamiento para usar el número de caras seleccionado
 ● Validar que la opción elegida sea válida; si no, mostrar error y pedir de nuevo
+
+Prompt 4
+
+Archivo:
+src/simulador.py
+Tareas:
+● Preguntar al usuario cuántos dados quiere lanzar (1 a 10)
+● Lanzar todos los dados de una vez y mostrar cada resultado individualmente
+● Mostrar también la suma total de todos los dados lanzados
+● Validar que el número de dados sea un entero entre 1 y 10

@@ -68,3 +68,14 @@ Tareas:
 ● Representar la frecuencia de cada valor posible del dado en las tiradas realizadas
 ● Escalar las barras proporcionalmente al valor más frecuente
 ● Mostrar el histograma tras cada serie de tiradas
+
+Prompt 8
+
+Archivo:
+src/simulador.py
+Tareas:
+● Preguntar al usuario si quiere guardar el historial de la sesión
+● Crear un archivo en historial/ con el nombre tiradas_YYYYMMDD_HHMMSS.txt
+● Escribir en el archivo: tipo de dado, número de dados, todas las tiradas y estadísticas
+● Confirmar al usuario el nombre y ruta del archivo guardado
+

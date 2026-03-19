@@ -3,16 +3,39 @@ import os
 from datetime import datetime
 
 def limpiar_pantalla():
-    """Limpia la terminal según el sistema operativo."""
+    """
+    Limpia la terminal de comandos según el sistema operativo actual.
+    
+    Utiliza 'cls' para sistemas Windows (nt) y 'clear' para sistemas 
+    basados en Unix (Linux/macOS).
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def mostrar_bienvenida():
+    """
+    Imprime en pantalla el encabezado visual del programa.
+    
+    Muestra el título del simulador y los tipos de dados soportados
+    dentro de un marco decorativo.
+    """
     print("==========================================")
     print("🎲  BIENVENIDO AL SIMULADOR DE DADOS  🎲")
     print("      (D4, D6, D8, D10, D12, D20)       ")
     print("==========================================\n")
 
 def guardar_en_archivo(caras, cantidad, historial_tiradas, estadisticas):
+    """
+    Registra los resultados de la sesión actual en un archivo de texto.
+
+    Crea un directorio 'historial' si no existe y genera un archivo único
+    nombrado con la fecha y hora actual (ISO 8601 simplificado).
+
+    Args:
+        caras (int): Número de caras del dado utilizado.
+        cantidad (int): Cuántos dados se lanzaron por tirada.
+        historial_tiradas (list): Lista de listas con los resultados numéricos.
+        estadisticas (dict): Diccionario con los cálculos de la serie.
+    """
     if not historial_tiradas:
         print("⚠️ No hay datos en la sesión actual para guardar.")
         return
@@ -35,6 +58,16 @@ def guardar_en_archivo(caras, cantidad, historial_tiradas, estadisticas):
     print(f"✅ Archivo guardado: {nombre_archivo}")
 
 def mostrar_histograma(historial_tiradas, caras):
+    """
+    Genera una representación visual de la frecuencia de resultados.
+
+    Calcula cuántas veces apareció cada cara y muestra una barra
+    proporcional usando el carácter '■'.
+
+    Args:
+        historial_tiradas (list): Lista con todos los lanzamientos.
+        caras (int): Rango máximo del dado para el eje del histograma.
+    """
     todos_los_numeros = [v for t in historial_tiradas for v in t]
     frecuencias = {c: todos_los_numeros.count(c) for c in range(1, caras + 1)}
     max_f = max(frecuencias.values()) if frecuencias.values() else 0
@@ -45,6 +78,18 @@ def mostrar_histograma(historial_tiradas, caras):
         print(f"Cara {cara:2}: {barra} ({cuenta})")
 
 def calcular_estadisticas(historial_tiradas):
+    """
+    Calcula métricas descriptivas de una serie de lanzamientos.
+
+    Procesa las sumas de cada tirada para obtener el total global,
+    el promedio aritmético y los valores extremos.
+
+    Args:
+        historial_tiradas (list): Los datos brutos de la serie.
+
+    Returns:
+        dict: Un diccionario con las claves 'Total', 'Media', 'Máximo' y 'Mínimo'.
+    """
     sumas = [sum(t) for t in historial_tiradas]
     stats = {
         "Total": sum(sumas),
@@ -58,6 +103,20 @@ def calcular_estadisticas(historial_tiradas):
     return stats
 
 def obtener_entero(msg, min_v, max_v):
+    """
+    Solicita una entrada numérica al usuario y la valida.
+
+    Mantiene al usuario en un bucle hasta que proporcione un número entero
+    dentro del rango especificado.
+
+    Args:
+        msg (str): El mensaje que se mostrará en el prompt.
+        min_v (int): Valor mínimo aceptado.
+        max_v (int): Valor máximo aceptado.
+
+    Returns:
+        int: El número validado proporcionado por el usuario.
+    """
     while True:
         entrada = input(msg).strip()
         if entrada.isdigit() and min_v <= int(entrada) <= max_v:
@@ -65,6 +124,15 @@ def obtener_entero(msg, min_v, max_v):
         print(f"❌ Error: Introduce un número entre {min_v} y {max_v}.")
 
 def flujo_tirada():
+    """
+    Gestiona la configuración y ejecución de una nueva serie de dados.
+
+    Pide al usuario el tipo de dado, cantidad y repeticiones, ejecuta
+    la lógica de azar y muestra el resumen visual.
+
+    Returns:
+        dict or None: Datos de la tirada si tuvo éxito, None si el dado no es válido.
+    """
     dados_validos = {"4": 4, "6": 6, "8": 8, "10": 10, "12": 12, "20": 20}
     print("\n--- Configuración de Tirada ---")
     eleccion = input("Elige caras (4, 6, 8, 10, 12, 20): ").strip()
@@ -90,6 +158,12 @@ def flujo_tirada():
         return None
 
 def main():
+    """
+    Punto de entrada principal del simulador.
+    
+    Controla el bucle del menú principal y la navegación entre las
+    diferentes opciones de la aplicación.
+    """
     sesion_actual = None
     
     while True:

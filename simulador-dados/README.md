@@ -22,12 +22,16 @@ Asegúrate de tener instalado Python 3.x en tu sistema.
 2. Clonar el repositorio
 ````Bash
 git clone https://github.com/zombiradiactivo/Tareas-Extras-Dicampus.git
+cd .\Tareas-Extras-Dicampus\simulador-dados
 ````
-cd simulador-dados
 
 3. Ejecutar el simulador
 ````Bash
 python src/simulador.py
+
+o
+
+python -m src_refactorizado.app
 ````
 
 ## 🛠️ Estructura del Proyecto

@@ -1,5 +1,0 @@
-Python es un lenguaje de programación potente y fácil de aprender. 
-Es ideal para el análisis de datos y la automatización.
-
-El análisis de texto permite extraer información valiosa de grandes volúmenes de datos. 
-¿Te gusta la programación? ¡A nosotros nos encanta Python!

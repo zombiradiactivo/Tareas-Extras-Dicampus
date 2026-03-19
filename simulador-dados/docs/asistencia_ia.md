@@ -58,3 +58,13 @@ Tareas:
 ● Calcular: suma total, media por tirada, valor máximo y valor mínimo obtenidos
 ● Mostrar las estadísticas al final de cada serie de lanzamientos
 ● Identificar en qué tirada se obtuvo el resultado más alto y el más bajo
+
+Prompt 7 
+
+Archivo:
+src/simulador.py
+Tareas:
+● Crear función que muestre un histograma de barras en la terminal usando el carácter ■
+● Representar la frecuencia de cada valor posible del dado en las tiradas realizadas
+● Escalar las barras proporcionalmente al valor más frecuente
+● Mostrar el histograma tras cada serie de tiradas

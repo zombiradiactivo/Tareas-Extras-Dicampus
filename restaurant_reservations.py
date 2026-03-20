@@ -11,6 +11,8 @@ from typing import Dict, List, Optional, Tuple
 
 @dataclass
 class Customer:
+    """Cliente que realiza reservas."""
+
     name: str
     phone: str
     email: str
@@ -20,6 +22,8 @@ class Customer:
 
 @dataclass
 class Table:
+    """Mesa del restaurante."""
+
     number: int
     capacity: int
     zone: str
@@ -28,6 +32,8 @@ class Table:
 
 @dataclass
 class Reservation:
+    """Reserva de una mesa por un cliente en una franja horaria determinada."""
+
     customer_id: str
     table_id: str
     start: datetime.datetime
@@ -38,10 +44,12 @@ class Reservation:
 
 
 class ReservationError(Exception):
-    pass
+    """Excepción para errores de negocios en el sistema de reservas."""
 
 
 class ReservationSystem:
+    """Controlador de la lógica de reservas, mesas y clientes."""
+
     def __init__(self):
         self.customers: Dict[str, Customer] = {}
         self.tables: Dict[str, Table] = {}
@@ -49,6 +57,11 @@ class ReservationSystem:
 
     # ---------- Clientes ----------
     def add_customer(self, name: str, phone: str, email: str) -> Customer:
+        """Agrega un cliente y devuelve el objeto creado.
+
+        Lanza ReservationError si los datos están incompletos o el email ya existe.
+        """
+
         if not name.strip() or not phone.strip() or not email.strip():
             raise ReservationError("Nombre, teléfono y email son obligatorios")
 
@@ -60,23 +73,27 @@ class ReservationSystem:
         return customer
 
     def get_customer(self, customer_id: str) -> Customer:
+        """Devuelve un cliente por ID. Lanza ReservationError si no existe."""
         try:
             return self.customers[customer_id]
         except KeyError:
             raise ReservationError("Cliente no encontrado")
 
     def get_customer_by_email(self, email: str) -> Customer:
+        """Busca un cliente por email. Lanza ReservationError si no existe."""
         for customer in self.customers.values():
             if customer.email == email:
                 return customer
         raise ReservationError("Cliente no encontrado")
 
     def get_customer_history(self, customer_id: str) -> List[Reservation]:
+        """Retorna todas las reservas asociadas a un cliente."""
         customer = self.get_customer(customer_id)
         return [self.reservations[rid] for rid in customer.reservation_ids if rid in self.reservations]
 
     # ---------- Mesas ----------
     def add_table(self, number: int, capacity: int, zone: str) -> Table:
+        """Registra una nueva mesa en el sistema."""
         if number <= 0 or capacity <= 0:
             raise ReservationError("Número y capacidad de mesa deben ser mayores que 0")
 
@@ -92,6 +109,7 @@ class ReservationSystem:
         return table
 
     def get_table(self, table_id: str) -> Table:
+        """Devuelve una mesa por ID. Lanza ReservationError si no existe."""
         try:
             return self.tables[table_id]
         except KeyError:
@@ -100,21 +118,25 @@ class ReservationSystem:
     # ---------- Reservas ----------
     @staticmethod
     def _assert_future_datetime(start: datetime.datetime):
+        """Verifica que la fecha de inicio sea en el futuro."""
         now = datetime.datetime.now()
         if start < now:
             raise ReservationError("La fecha y hora de la reserva debe ser en el futuro")
 
     @staticmethod
     def _is_overlapping(start1: datetime.datetime, end1: datetime.datetime, start2: datetime.datetime, end2: datetime.datetime) -> bool:
+        """Determina si dos intervalos de tiempo se solapan."""
         return start1 < end2 and start2 < end1
 
     def _assert_party_size(self, party_size: int, table: Table):
+        """Verifica que el tamaño del grupo sea adecuado para la mesa."""
         if party_size <= 0:
             raise ReservationError("Tamaño de grupo debe ser mayor que 0")
         if party_size > table.capacity:
             raise ReservationError("El número de personas excede la capacidad de la mesa")
 
     def check_availability(self, table_id: str, start: datetime.datetime, duration_hours: float = 2.0, exclude_reservation_id: Optional[str] = None) -> bool:
+        """Comprueba si una mesa está libre para una franja horaria dada."""
         self.get_table(table_id)
         if duration_hours <= 0:
             raise ReservationError("Duración inválida")
@@ -132,6 +154,10 @@ class ReservationSystem:
         return True
 
     def create_reservation(self, customer_id: str, table_id: str, start: datetime.datetime, party_size: int = 1, duration_hours: float = 2.0) -> Reservation:
+        """Crea una reserva nueva.
+
+        Valida cliente, mesa, tiempo futuro, tamaño de grupo y disponibilidad.
+        """
         if customer_id not in self.customers:
             raise ReservationError("Cliente no registrado")
 
@@ -155,12 +181,14 @@ class ReservationSystem:
         return reservation
 
     def get_reservation(self, reservation_id: str) -> Reservation:
+        """Recupera una reserva por ID. Lanza error si no existe."""
         try:
             return self.reservations[reservation_id]
         except KeyError:
             raise ReservationError("Reserva no encontrada")
 
     def modify_reservation(self, reservation_id: str, table_id: Optional[str] = None, start: Optional[datetime.datetime] = None, party_size: Optional[int] = None, duration_hours: Optional[float] = None) -> Reservation:
+        """Modifica los datos de una reserva activa."""
         reservation = self.get_reservation(reservation_id)
         if reservation.status != "active":
             raise ReservationError("Solo se pueden modificar reservas activas")
@@ -184,6 +212,7 @@ class ReservationSystem:
         return reservation
 
     def cancel_reservation(self, reservation_id: str) -> Reservation:
+        """Cancela una reserva activa."""
         reservation = self.get_reservation(reservation_id)
         if reservation.status == "cancelled":
             raise ReservationError("Reserva ya cancelada")
@@ -192,23 +221,28 @@ class ReservationSystem:
         return reservation
 
     def list_reservations(self, status: Optional[str] = None) -> List[Reservation]:
+        """Lista reservas, opcionalmente filtrando por estado."""
         if status is None:
             return list(self.reservations.values())
         return [r for r in self.reservations.values() if r.status == status]
 
     def find_reservations_by_date(self, date: datetime.date) -> List[Reservation]:
+        """Devuelve reservas activas de un día determinado."""
         return [r for r in self.reservations.values() if r.start.date() == date and r.status == "active"]
 
     def is_table_available(self, table_id: str, start: datetime.datetime, duration_hours: float = 2.0) -> bool:
+        """Alias del método de comprobación de disponibilidad."""
         return self.check_availability(table_id, start, duration_hours)
 
     def upcoming_reminders(self, reference: Optional[datetime.datetime] = None) -> List[Reservation]:
+        """Devuelve reservas activas que comienzan en las próximas 24 horas."""
         now = reference or datetime.datetime.now()
         limit = now + datetime.timedelta(hours=24)
         reminders = [r for r in self.reservations.values() if r.status == "active" and now <= r.start <= limit]
         return sorted(reminders, key=lambda r: r.start)
 
     def most_reserved_table(self) -> Optional[Tuple[Table, int]]:
+        """Retorna la mesa más reservada y su número de reservas."""
         counter = Counter(r.table_id for r in self.reservations.values() if r.status == "active")
         if not counter:
             return None
@@ -217,6 +251,7 @@ class ReservationSystem:
         return self.tables[table_id], count
 
     def peak_hour(self) -> Optional[Tuple[int, int]]:
+        """Determina la hora del día con más reservas activas."""
         hour_counts = Counter(r.start.hour for r in self.reservations.values() if r.status == "active")
         if not hour_counts:
             return None
@@ -225,11 +260,13 @@ class ReservationSystem:
         return hour, count
 
     def frequent_clients(self, top_n: int = 3) -> List[Tuple[Customer, int]]:
+        """Devuelve los clientes con más reservas activas, ordenados de mayor a menor."""
         customer_counts = Counter(r.customer_id for r in self.reservations.values() if r.status == "active")
         most_common = customer_counts.most_common(top_n)
         return [(self.customers[cid], count) for cid, count in most_common]
 
     def save_to_db(self, path: str):
+        """Guarda el estado actual en una base de datos SQLite."""
         conn = sqlite3.connect(path)
         cur = conn.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS customers (
@@ -274,6 +311,7 @@ class ReservationSystem:
         conn.close()
 
     def load_from_db(self, path: str):
+        """Carga datos desde una base de datos SQLite al sistema en memoria."""
         conn = sqlite3.connect(path)
         cur = conn.cursor()
 
@@ -303,6 +341,7 @@ class ReservationSystem:
 
 
 def main():
+    """Entry point CLI: ejecuta comandos o modo interactivo."""
     parser = argparse.ArgumentParser(description="Sistema básico de reservas para restaurante")
     parser.add_argument("--db", default="reservations.db", help="Ruta de la base de datos SQLite")
     subparsers = parser.add_subparsers(dest="command")

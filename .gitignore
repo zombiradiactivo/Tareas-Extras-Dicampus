@@ -1,6 +1,6 @@
 # --- Ignorar archivos .txt en la carpeta historial/ ---
 simulador-dados/historial/*.txt
-
+*.db
 ##Template de github https://github.com/github/gitignore/blob/main/Python.gitignore
 
 

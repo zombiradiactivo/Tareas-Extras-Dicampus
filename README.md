@@ -1,77 +1,48 @@
-# Gestión de Videoclub
+# Sistema de Reservas de Restaurante
 
-Proyecto de para gestionar un videoclub en Python con:
-- Películas
-- Clientes
-- Alquileres
-- Multas por devolución tardía
+Proyecto: implementación en Python de un sistema básico de reservas para un restaurante.
 
-> Se usa como referencia principal la carpeta `src_refactorizar` (refactorizada y actualizada), la carpeta `src` se ha quedado desactualizada al refactorizar.
+## Características
 
-## Estructura del proyecto
+- Gestión de clientes: nombre, teléfono, email, historial de reservas
+- Gestión de mesas: número, capacidad, zona (terraza/interior/privado)
+- Reservas: crear, consultar, modificar, cancelar
+- Validación de capacidad (no se acepta reserva para grupo mayor que capacidad de mesa)
+- Comprobación de disponibilidad (superposición de franjas horarias)
+- Recordatorios (reservas dentro de las próximas 24h)
+- Estadísticas: mesa más reservada, hora punta, clientes frecuentes
+- Persistencia con SQLite (`save_to_db`, `load_from_db`)
+- Interfaz CLI y modo interactivo en terminal
 
-- `src_refactorizar/`
-  - `main.py`: punto de entrada (`python -m src_refactorizar.main`).
-  - `database/db_handler.py`: gestión de SQLite, creación de tablas y conexión con context manager.
-  - `models/`: modelo de datos (`Pelicula`, `Cliente`, `Alquiler`, `Multa`).
-  - `services/`: lógica de negocio y acceso a datos (alquiler, multas, catálogo, clientes).
-  - `ui/menu.py`: interfaz de consola con opciones de menú.
-- `src_refactorizar/test/`: tests unitarios con `pytest`.
+## Archivos
+
+- `restaurant_reservations.py`: lógica de negocio, persistencia y CLI/interactivo
+- `test_restaurant_reservations.py`: pruebas con `pytest`
 
 ## Requisitos
 
-- Python 3.10+
-- pytest (solo para tests)
+- Python 3.8+
+- `pytest` para tests
 
-Instalación de dependencias (entorno virtual recomendado):
-
-```bash
-python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/macOS
-pip install pytest
-```
-
-## Uso
-
-1. Crear tablas y ejecutar aplicación:
+## Uso CLI
 
 ```bash
-cd gestion_videoclub
-python -m src_refactorizar.main
+python restaurant_reservations.py add-customer "Ana" "123" "ana@mail.com"
+python restaurant_reservations.py add-table 1 4 interior
+python restaurant_reservations.py create-reservation "ana@mail.com" 1 2026-03-21T20:00 4 2
+python restaurant_reservations.py list-reservations active
 ```
 
-2. El menú permite:
-- Ver catálogo de películas
-- Ver clientes (historial)
-- Alquilar película
-- Devolver película
+## Uso modo interactivo
+
+```bash
+python restaurant_reservations.py
+```
+
+Se mostrará un menú en terminal para crear clientes, mesas, reservas y ver estadísticas.
 
 ## Tests
 
-Ejecutar tests:
-
 ```bash
-cd gestion_videoclub
-python -m pytest -q src_refactorizar/test
+pytest -q
 ```
-
-Todos los tests deben pasar:
-- `test_catalog_and_customer.py`
-- `test_rental_and_penalty.py`
-
-## Notas de implementación
-
-- DB local `video_club.db` (o temporal en tests).
-- La lógica de multas se calcula por días de retraso:
-  - `Alquiler.calcular_multa_actual()` calcula retardo con `TARIFA_DIARIA_RETRASO`.
-- `penalty_service` registra multas solo si monto > 0.
-- Refactor: separación de responsabilidades (SRP) y servicios desacoplados.
-
-## Siguiente evolución posible
-
-- CRUD de películas/clientes
-- Reportes de alquileres, multas y estado stock
-- Saldos y pago de multas
-- Persistencia con ORM (SQLAlchemy)
-- UI gráfica o API REST

@@ -382,6 +382,8 @@ def run_interactive_menu(system: ReservationSystem):
         print("5) Comprobar disponibilidad")
         print("6) Recordatorios (menos de 24h)")
         print("7) Estadísticas")
+        print("8) Cancelar reserva")
+        print("9) Modificar reserva")
         print("q) Salir")
 
         choice = input("Opción: ").strip().lower()
@@ -451,6 +453,38 @@ def run_interactive_menu(system: ReservationSystem):
                 print("Clientes frecuentes:")
                 for customer, cnt in f:
                     print(f" {customer.name} ({customer.email}): {cnt}")
+
+            elif choice == "8":
+                reservation_id = input("ID de la reserva a cancelar: ").strip()
+                reservation = system.cancel_reservation(reservation_id)
+                print(f"Reserva cancelada: {reservation.reservation_id}")
+
+            elif choice == "9":
+                reservation_id = input("ID de la reserva a modificar: ").strip()
+                reservation = system.get_reservation(reservation_id)
+                print(f"Reserva actual: {reservation}")
+
+                new_table_number = input("Nuevo número de mesa (vacío para no cambiar): ").strip()
+                if new_table_number:
+                    table_num = int(new_table_number)
+                    table = next((t for t in system.tables.values() if t.number == table_num), None)
+                    if table is None:
+                        raise ReservationError("Mesa no encontrada")
+                    table_id = table.table_id
+                else:
+                    table_id = reservation.table_id
+
+                new_start_text = input("Nueva fecha/hora (YYYY-MM-DDTHH:MM) (vacío para no cambiar): ").strip()
+                new_start = get_date("Nueva fecha/hora (YYYY-MM-DDTHH:MM): ") if new_start_text else None
+
+                new_party = input("Nuevo tamaño del grupo (vacío para no cambiar): ").strip()
+                new_party_size = int(new_party) if new_party else None
+
+                new_duration = input("Nueva duración (horas) (vacío para no cambiar): ").strip()
+                new_duration = float(new_duration) if new_duration else None
+
+                updated = system.modify_reservation(reservation_id, table_id=table_id, start=new_start, party_size=new_party_size, duration_hours=new_duration)
+                print(f"Reserva modificada: {updated}")
 
             else:
                 print("Opción inválida")

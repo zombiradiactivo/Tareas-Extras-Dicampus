@@ -37,6 +37,10 @@ python restaurant_reservations.py list-reservations active
 
 ```bash
 python restaurant_reservations.py
+
+Refactorizacion v2
+python -m refactorizaciones.v2
+
 ```
 
 Se mostrará un menú en terminal para crear clientes, mesas, reservas y ver estadísticas.

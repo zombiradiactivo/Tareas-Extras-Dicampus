@@ -18,6 +18,18 @@ Proyecto: implementación en Python de un sistema básico de reservas para un re
 
 - `restaurant_reservations.py`: lógica de negocio, persistencia y CLI/interactivo
 - `test_restaurant_reservations.py`: pruebas con `pytest`
+- `test_benchmark_refactorizations.py`: benchmarks de rendimiento `v2` vs `v3`
+
+## Refactorizaciones
+
+- `refactorizaciones/v1`: refactorización inicial para legibilidad
+- `refactorizaciones/v2`: separación SOLID (dominio, repositorio, servicio, CLI)
+- `refactorizaciones/v3`: mejora de rendimiento (índices en memoria + operaciones individuales en DB)
+
+## Nota de rendimiento
+
+- v3 está optimizado para grandes volúmenes de reservas mediante índices (`tables_by_number`, `customers_by_email`, `reservations_by_table`) y actualizaciones incrementales con `add_reservation`/`update_reservation`.
+- Ver test kan en `test_benchmark_refactorizations.py`.
 
 ## Requisitos
 
@@ -41,6 +53,8 @@ python restaurant_reservations.py
 Refactorizacion v2
 python -m refactorizaciones.v2
 
+Refactorizacion v3 (optimizado)
+python -m refactorizaciones.v3
 ```
 
 Se mostrará un menú en terminal para crear clientes, mesas, reservas y ver estadísticas.

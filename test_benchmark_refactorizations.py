@@ -4,6 +4,7 @@ import pytest
 import gc # Garbage Collector para forzar la liberación en Windows
 import os
 
+from refactorizaciones.v1.restaurant_reservations import ReservationSystem as V1System
 from refactorizaciones.v2.repository import ReservationRepository as V2Repository
 from refactorizaciones.v2.service import ReservationService as V2Service
 from refactorizaciones.v3.repository import ReservationRepository as V3Repository
@@ -14,7 +15,7 @@ from refactorizaciones.v3.service import ReservationService as V3Service
 @pytest.fixture(autouse=True)
 def cleanup_benchmarks():
     # 1. Antes del test: Limpiar
-    db_files = ["db/bench_v2.db", "db/bench_v3.db"]
+    db_files = ["db/bench_v1.db", "db/bench_v2.db", "db/bench_v3.db"]
     for f in db_files:
         if os.path.exists(f):
             try:
@@ -67,6 +68,29 @@ def setup_benchmark_service(service_class, repo_class, db_filename):
     _populate_service(service, num_customers=10, num_tables=5, reservations_per_table=80)
     return service
 
+
+def setup_v1_service(db_filename):
+    # La V1 no tiene Repository separado, es un sistema completo
+    system = V1System()
+    # Importante: En V1, save_to_db crea las tablas y establece la ruta
+    system.save_to_db(f"db/{db_filename}") 
+    _populate_service(system, num_customers=10, num_tables=5, reservations_per_table=80)
+    return system
+
+@pytest.mark.benchmark(group="availability-check")
+def test_benchmark_v1_availability(benchmark):
+    # 1. SETUP
+    service = setup_v1_service("bench_v1.db")
+    table_id = list(service.tables.keys())[0]
+    ref_time = datetime.datetime.now() + datetime.timedelta(days=1)
+
+    # 2. EJECUCIÓN
+    result = benchmark.pedantic(lambda: service.check_availability(table_id, ref_time, duration_hours=2.0),iterations=100, rounds=50)
+
+
+    # Limpieza manual de conexión si fuera necesario (V1 usa sqlite3.connect en cada método)
+    assert result is not None
+
 @pytest.mark.benchmark(group="availability-check")
 def test_benchmark_v2_availability(benchmark):
     # Usamos un nombre de archivo simple para evitar el ReservationError
@@ -76,7 +100,7 @@ def test_benchmark_v2_availability(benchmark):
     ref_time = datetime.datetime.now() + datetime.timedelta(days=1)
     
     # Ahora sí, el benchmark ejecutará la lógica real
-    result = benchmark.pedantic(lambda: service.check_availability(table_id, ref_time, duration_hours=2.0),iterations=10, rounds=10)
+    result = benchmark.pedantic(lambda: service.check_availability(table_id, ref_time, duration_hours=2.0),iterations=100, rounds=50)
     assert result is not None
 
 @pytest.mark.benchmark(group="availability-check")
@@ -86,5 +110,5 @@ def test_benchmark_v3_availability(benchmark):
     table_id = list(service.tables.keys())[0]
     ref_time = datetime.datetime.now() + datetime.timedelta(days=1)
     
-    result = benchmark.pedantic(lambda: service.check_availability(table_id, ref_time, duration_hours=2.0),iterations=10, rounds=10)
+    result = benchmark.pedantic(lambda: service.check_availability(table_id, ref_time, duration_hours=2.0),iterations=100, rounds=50)
     assert result is not None

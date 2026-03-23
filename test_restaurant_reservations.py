@@ -63,7 +63,7 @@ def test_reminders_and_statistics():
     assert any(r.reservation_id == r1.reservation_id for r in reminders)
     assert all(r.start <= ahora + datetime.timedelta(hours=24) for r in reminders)
 
-    mesa_mas, count = system.most_reserved_table()
+    mesa_mas, count = system.most_reserved_table() # pyright: ignore[reportGeneralTypeIssues]
     assert mesa_mas.table_id in {t1.table_id, t2.table_id}
     assert count == 2 or count == 1
 
